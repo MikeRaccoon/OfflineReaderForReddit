@@ -17,7 +17,7 @@ extension Post {
         return NSFetchRequest<Post>(entityName: "Post")
     }
 
-    @NSManaged public var title: String
     @NSManaged public var created_utc: Date
+    @NSManaged public var title: String
 
 }

@@ -1,1 +1,1 @@
-# OfflineReaderForReddit
+Offline Reader for Reddit

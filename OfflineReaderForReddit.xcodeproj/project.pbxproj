@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */; };
+		275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */; };
+		275D42C82492D101005DCB23 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 275D42C72492D101005DCB23 /* README.md */; };
 		2792B6CC249245F400A9BEC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CB249245F400A9BEC3 /* AppDelegate.swift */; };
 		2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */; };
 		2792B6D0249245F400A9BEC3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CF249245F400A9BEC3 /* ViewController.swift */; };
@@ -16,8 +19,6 @@
 		2792B6E3249245F700A9BEC3 /* Offline_Reader_for_RedditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6E2249245F700A9BEC3 /* Offline_Reader_for_RedditTests.swift */; };
 		2792B6EE249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6ED249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift */; };
 		27AA4E322492B43600CD88B2 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E302492B43600CD88B2 /* Model.xcdatamodeld */; };
-		27AA4E392492B55900CD88B2 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E372492B55900CD88B2 /* Post+CoreDataClass.swift */; };
-		27AA4E3A2492B55900CD88B2 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E382492B55900CD88B2 /* Post+CoreDataProperties.swift */; };
 		27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
+		275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		275D42C72492D101005DCB23 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2792B6C8249245F400A9BEC3 /* OfflineReaderForReddit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OfflineReaderForReddit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2792B6CB249245F400A9BEC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,8 +58,6 @@
 		2792B6ED249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offline_Reader_for_RedditUITests.swift; sourceTree = "<group>"; };
 		2792B6EF249245F700A9BEC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27AA4E312492B43600CD88B2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		27AA4E372492B55900CD88B2 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		27AA4E382492B55900CD88B2 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +89,7 @@
 		2792B6BF249245F400A9BEC3 = {
 			isa = PBXGroup;
 			children = (
+				275D42C72492D101005DCB23 /* README.md */,
 				2792B6CA249245F400A9BEC3 /* OfflineReaderForReddit */,
 				2792B6E1249245F700A9BEC3 /* Offline Reader for RedditTests */,
 				2792B6EC249245F700A9BEC3 /* Offline Reader for RedditUITests */,
@@ -107,13 +110,13 @@
 		2792B6CA249245F400A9BEC3 /* OfflineReaderForReddit */ = {
 			isa = PBXGroup;
 			children = (
-				27AA4E372492B55900CD88B2 /* Post+CoreDataClass.swift */,
-				27AA4E382492B55900CD88B2 /* Post+CoreDataProperties.swift */,
-				2792B6CB249245F400A9BEC3 /* AppDelegate.swift */,
-				2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */,
+				275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */,
+				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
 				27AA4E302492B43600CD88B2 /* Model.xcdatamodeld */,
 				27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */,
+				2792B6CB249245F400A9BEC3 /* AppDelegate.swift */,
+				2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */,
 				2792B6D1249245F400A9BEC3 /* Main.storyboard */,
 				2792B6D4249245F700A9BEC3 /* Assets.xcassets */,
 				2792B6D6249245F700A9BEC3 /* LaunchScreen.storyboard */,
@@ -246,6 +249,7 @@
 			files = (
 				2792B6D8249245F700A9BEC3 /* LaunchScreen.storyboard in Resources */,
 				2792B6D5249245F700A9BEC3 /* Assets.xcassets in Resources */,
+				275D42C82492D101005DCB23 /* README.md in Resources */,
 				2792B6D3249245F400A9BEC3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,11 +277,11 @@
 			files = (
 				2792B6D0249245F400A9BEC3 /* ViewController.swift in Sources */,
 				2792B6CC249245F400A9BEC3 /* AppDelegate.swift in Sources */,
-				27AA4E392492B55900CD88B2 /* Post+CoreDataClass.swift in Sources */,
+				275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */,
 				2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */,
 				27AA4E322492B43600CD88B2 /* Model.xcdatamodeld in Sources */,
+				275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */,
 				27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */,
-				27AA4E3A2492B55900CD88B2 /* Post+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

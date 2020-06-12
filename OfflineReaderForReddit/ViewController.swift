@@ -9,10 +9,9 @@
 import CoreData
 import UIKit
 
-class ViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+class ViewController: UITableViewController {
     var container: NSPersistentContainer!
-    var postPredicate: NSPredicate?
-    var fetchedResultsController: NSFetchedResultsController<Post>!
+    var posts = [Post]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,19 +28,21 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate 
         }
         
         performSelector(inBackground: #selector(fetchPosts), with: nil)
-        loadSavedData()
+       // loadSavedData()
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //let sectionInfo = fetchedResultsController.sections![section]
-        //return sectionInfo.numberOfObjects
-        return 10
+        return posts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Post", for: indexPath)
         
-        let post = fetchedResultsController.object(at: indexPath)
+        let post = posts[indexPath.row]
         cell.textLabel!.text = post.title
         
         return cell
@@ -82,47 +83,38 @@ class ViewController: UITableViewController, NSFetchedResultsControllerDelegate 
     }
     
     func configure(post: Post, usingJSON json: JSON) {
-        post.title = json["title"].stringValue
-        
-        let formatter = ISO8601DateFormatter()
-        post.created_utc = formatter.date(from: json["post"]["created_utc"].stringValue) ?? Date()
+        post.title = json["data"]["title"].stringValue
+        post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
     }
     
     func loadSavedData() {
-        if fetchedResultsController == nil {
-            let request = Post.createFetchRequest()
-            let sort = NSSortDescriptor(key: "created_utc", ascending: false)
-            request.sortDescriptors = [sort]
-            request.fetchBatchSize = 20
-            
-            fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: container.viewContext, sectionNameKeyPath: "created_utc", cacheName: nil)
-            fetchedResultsController.delegate = self
-        }
-        
-        fetchedResultsController.fetchRequest.predicate = postPredicate
-        
+        let request = Post.createFetchRequest()
+        let sort = NSSortDescriptor(key: "created_utc", ascending: false)
+        request.sortDescriptors = [sort]
+                
         do {
-            try fetchedResultsController.performFetch()
+            posts = try container.viewContext.fetch(request)
+            print("Got \(posts.count) posts")
             tableView.reloadData()
         } catch {
             print("Fetch failed")
         }
     }
-    
+//
 //    func getNewestPostDate() -> String {
 //        let formatter = ISO8601DateFormatter()
-//        
+//
 //        let newest = Post.createFetchRequest()
 //        let sort = NSSortDescriptor(key: "created_utc", ascending: false)
 //        newest.sortDescriptors = [sort]
 //        newest.fetchLimit = 1
-//        
+//
 //        if let posts = try? container.viewContext.fetch(newest) {
 //            if posts.count > 0 {
 //                return formatter.string(from: posts[0].created_utc.addingTimeInterval(1))
 //            }
 //        }
-//        
+//
 //        return formatter.string(from: Date(timeIntervalSince1970: 0))
 //    }
 }
