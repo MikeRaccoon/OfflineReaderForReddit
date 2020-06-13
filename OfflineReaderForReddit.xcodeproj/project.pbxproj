@@ -18,7 +18,7 @@
 		2792B6D8249245F700A9BEC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2792B6D6249245F700A9BEC3 /* LaunchScreen.storyboard */; };
 		2792B6E3249245F700A9BEC3 /* Offline_Reader_for_RedditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6E2249245F700A9BEC3 /* Offline_Reader_for_RedditTests.swift */; };
 		2792B6EE249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6ED249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift */; };
-		27AA4E322492B43600CD88B2 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E302492B43600CD88B2 /* Model.xcdatamodeld */; };
+		27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */; };
 		27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
@@ -113,7 +113,7 @@
 				275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */,
 				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
-				27AA4E302492B43600CD88B2 /* Model.xcdatamodeld */,
+				27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */,
 				27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */,
 				2792B6CB249245F400A9BEC3 /* AppDelegate.swift */,
 				2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */,
@@ -279,7 +279,7 @@
 				2792B6CC249245F400A9BEC3 /* AppDelegate.swift in Sources */,
 				275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */,
 				2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */,
-				27AA4E322492B43600CD88B2 /* Model.xcdatamodeld in Sources */,
+				27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */,
 				275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */,
 				27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */,
 			);
@@ -612,13 +612,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		27AA4E302492B43600CD88B2 /* Model.xcdatamodeld */ = {
+		27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				27AA4E312492B43600CD88B2 /* Model.xcdatamodel */,
 			);
 			currentVersion = 27AA4E312492B43600CD88B2 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			path = Data.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

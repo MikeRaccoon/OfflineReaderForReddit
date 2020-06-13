@@ -17,7 +17,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "Offline Reader for Reddit"
-        container = NSPersistentContainer(name: "Model")
+        container = NSPersistentContainer(name: "Data")
         
         container.loadPersistentStores { storeDescription, error in
             self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -28,7 +28,7 @@ class ViewController: UITableViewController {
         }
         
         performSelector(inBackground: #selector(fetchPosts), with: nil)
-       // loadSavedData()
+        loadSavedData()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -51,7 +51,7 @@ class ViewController: UITableViewController {
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         
-        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json")!) {
+        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=100")!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
@@ -84,13 +84,14 @@ class ViewController: UITableViewController {
     
     func configure(post: Post, usingJSON json: JSON) {
         post.title = json["data"]["title"].stringValue
+        post.id = json["data"]["id"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
     }
     
     func loadSavedData() {
         let request = Post.createFetchRequest()
-        let sort = NSSortDescriptor(key: "created_utc", ascending: false)
-        request.sortDescriptors = [sort]
+//        let sort = NSSortDescriptor(key: "created_utc", ascending: false)
+//        request.sortDescriptors = [sort]
                 
         do {
             posts = try container.viewContext.fetch(request)
