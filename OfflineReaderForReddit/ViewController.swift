@@ -45,7 +45,35 @@ class ViewController: UITableViewController {
         let post = posts[indexPath.row]
         cell.textLabel!.text = post.title
         
+        let postInfo = UIStackView()
+        postInfo.translatesAutoresizingMaskIntoConstraints = false
+        postInfo.spacing = 5
+
+                postInfo.bounds = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.size.width - 50, height: cell.bounds.size.height)
+        cell.contentView.addSubview(postInfo)
+        
+        postInfo.topAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.topAnchor).isActive = true
+        postInfo.leadingAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        postInfo.trailingAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        postInfo.axis = .horizontal
+        
+        let subreddit = UILabel()
+        subreddit.text = post.subreddit
+        postInfo.addArrangedSubview(subreddit)
+        
+        let author = UILabel()
+        author.text = "Posted by u/\(post.author)"
+        postInfo.addArrangedSubview(author)
+        
+        let title = UILabel()
+        title.text = post.title
+        cell.contentView.addSubview(title)
+        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
     
     @objc func fetchPosts() {
@@ -83,9 +111,11 @@ class ViewController: UITableViewController {
     }
     
     func configure(post: Post, usingJSON json: JSON) {
+        post.author = json["data"]["author"].stringValue
         post.title = json["data"]["title"].stringValue
         post.id = json["data"]["id"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
+        post.subreddit = json["data"]["subreddit"].stringValue
     }
     
     func loadSavedData() {
