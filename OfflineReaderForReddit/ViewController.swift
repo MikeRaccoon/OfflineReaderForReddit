@@ -16,6 +16,15 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
+        
+       
+       
+        
+        
+        
+        
+        
         title = "Offline Reader for Reddit"
         container = NSPersistentContainer(name: "Data")
         
@@ -29,6 +38,9 @@ class ViewController: UITableViewController {
         
         performSelector(inBackground: #selector(fetchPosts), with: nil)
         loadSavedData()
+        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 100
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -40,41 +52,19 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Post", for: indexPath)
-        
+        let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
-        cell.textLabel!.text = post.title
         
-        let postInfo = UIStackView()
-        postInfo.translatesAutoresizingMaskIntoConstraints = false
-        postInfo.spacing = 5
+        cell.subreddit.text = post.subreddit
+        cell.author.text = "Posted by u/\(post.author)"
+        cell.title.text = post.title
 
-                postInfo.bounds = CGRect(x: cell.bounds.origin.x, y: cell.bounds.origin.y, width: cell.bounds.size.width - 50, height: cell.bounds.size.height)
-        cell.contentView.addSubview(postInfo)
-        
-        postInfo.topAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.topAnchor).isActive = true
-        postInfo.leadingAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        postInfo.trailingAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        postInfo.axis = .horizontal
-        
-        let subreddit = UILabel()
-        subreddit.text = post.subreddit
-        postInfo.addArrangedSubview(subreddit)
-        
-        let author = UILabel()
-        author.text = "Posted by u/\(post.author)"
-        postInfo.addArrangedSubview(author)
-        
-        let title = UILabel()
-        title.text = post.title
-        cell.contentView.addSubview(title)
-        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 120
+//    }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
