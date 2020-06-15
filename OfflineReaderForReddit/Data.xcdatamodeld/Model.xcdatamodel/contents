@@ -4,7 +4,11 @@
         <attribute name="author" attributeType="String"/>
         <attribute name="created_utc" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="post_hint" attributeType="String"/>
+        <attribute name="score" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="selftext" attributeType="String"/>
         <attribute name="subreddit" attributeType="String"/>
+        <attribute name="thumbnail" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -13,6 +17,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="178"/>
     </elements>
 </model>

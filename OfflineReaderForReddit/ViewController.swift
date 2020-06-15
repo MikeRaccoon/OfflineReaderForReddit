@@ -58,18 +58,47 @@ class ViewController: UITableViewController {
         cell.subreddit.text = post.subreddit
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
-
+        
+        let thumbnailType = post.thumbnail
+        
+        switch thumbnailType {
+        case "link":
+            print("link")
+            
+        case "nsfw":
+            print("nsfw")
+            
+        case "default":
+            print("default")
+            
+        case "self":
+            print("self")
+            
+        default:
+            guard let url = URL(string: post.thumbnail) else { return cell }
+                        
+            DispatchQueue.global().async {
+                if let imageData = try? Data(contentsOf: url) {
+                    DispatchQueue.main.async {
+                        cell.thumbnail.image = UIImage(data: imageData)
+                    }
+                }
+            }
+        }
+            
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 120
-//    }
+    // post_hint selftext score thumbnail
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         
-        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=100")!) {
+        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=30")!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
@@ -106,6 +135,10 @@ class ViewController: UITableViewController {
         post.id = json["data"]["id"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
         post.subreddit = json["data"]["subreddit"].stringValue
+        post.post_hint = json["data"]["post_hint"].stringValue
+        post.selftext = json["data"]["selftext"].stringValue
+        post.score = json["data"]["score"].int32Value
+        post.thumbnail = json["data"]["thumbnail"].stringValue
     }
     
     func loadSavedData() {

@@ -2,7 +2,7 @@
 //  Post+CoreDataProperties.swift
 //  OfflineReaderForReddit
 //
-//  Created by Mike on 2020-06-14.
+//  Created by Mike on 2020-06-16.
 //  Copyright © 2020 Mike. All rights reserved.
 //
 //
@@ -22,5 +22,9 @@ extension Post {
     @NSManaged public var id: String
     @NSManaged public var subreddit: String
     @NSManaged public var author: String
+    @NSManaged public var post_hint: String
+    @NSManaged public var selftext: String
+    @NSManaged public var score: Int32
+    @NSManaged public var thumbnail: String
 
 }

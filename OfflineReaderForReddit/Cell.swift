@@ -12,6 +12,7 @@ class Cell: UITableViewCell {
     var subreddit: UILabel!
     var author: UILabel!
     var title: UILabel!
+    var thumbnail: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,7 +36,7 @@ class Cell: UITableViewCell {
         let stackView2 = UIStackView()
         stackView2.translatesAutoresizingMaskIntoConstraints = false
         stackView2.spacing = 5
-        stackView2.axis = .horizontal
+        stackView2.axis = .vertical
         self.contentView.addSubview(stackView2)
         
         stackView2.topAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.bottomAnchor).isActive = true
@@ -44,6 +45,13 @@ class Cell: UITableViewCell {
     
         title = UILabel()
         stackView2.addArrangedSubview(title)
+        
+        thumbnail = UIImageView()
+        thumbnail.frame = CGRect(x: .zero, y: .zero, width: 10, height: 10)
+        thumbnail.contentMode = .scaleAspectFit
+        stackView2.addArrangedSubview(thumbnail)
+        
+       // post_hint selftext score thumbnail
 
       //  title.frame.origin.x = 0
         
