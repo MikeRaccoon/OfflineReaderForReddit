@@ -26,5 +26,6 @@ extension Post {
     @NSManaged public var selftext: String
     @NSManaged public var score: Int32
     @NSManaged public var thumbnail: String
+    @NSManaged public var image_data: Data?
 
 }

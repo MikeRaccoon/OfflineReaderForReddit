@@ -12,18 +12,12 @@ import UIKit
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
+    let dispatchGroup = DispatchGroup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
-        
-       
-       
-        
-        
-        
-        
         
         title = "Offline Reader for Reddit"
         container = NSPersistentContainer(name: "Data")
@@ -60,29 +54,17 @@ class ViewController: UITableViewController {
         cell.title.text = post.title
         
         let thumbnailType = post.thumbnail
-        
+
         switch thumbnailType {
-        case "link":
-            print("link")
-            
-        case "nsfw":
-            print("nsfw")
-            
-        case "default":
-            print("default")
-            
-        case "self":
-            print("self")
-            
+        case "link": break
+        case "nsfw": break
+        case "default": break
+        case "self": break
+
         default:
-            guard let url = URL(string: post.thumbnail) else { return cell }
-                        
-            DispatchQueue.global().async {
-                if let imageData = try? Data(contentsOf: url) {
-                    DispatchQueue.main.async {
-                        cell.thumbnail.image = UIImage(data: imageData)
-                    }
-                }
+            DispatchQueue.main.async {
+                let imageData = post.image_data!
+                cell.thumbnail.image = UIImage(data: imageData)
             }
         }
             
@@ -119,16 +101,6 @@ class ViewController: UITableViewController {
         }
     }
     
-    func saveContext() {
-        if container.viewContext.hasChanges {
-            do {
-                try container.viewContext.save()
-            } catch {
-                print("An error occured while saving: \(error)")
-            }
-        }
-    }
-    
     func configure(post: Post, usingJSON json: JSON) {
         post.author = json["data"]["author"].stringValue
         post.title = json["data"]["title"].stringValue
@@ -139,6 +111,31 @@ class ViewController: UITableViewController {
         post.selftext = json["data"]["selftext"].stringValue
         post.score = json["data"]["score"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
+        
+        // thumbnail links for image_data
+        switch post.thumbnail {
+        case "link": break
+        case "nsfw": break
+        case "default": break
+        case "self": break
+            
+        default:
+            guard let url = URL(string: post.thumbnail) else { break }
+                        
+            if let imageData = try? Data(contentsOf: url) {
+                post.image_data = imageData
+            }
+        }
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error occured while saving: \(error)")
+            }
+        }
     }
     
     func loadSavedData() {
