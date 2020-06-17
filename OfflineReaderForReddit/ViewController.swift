@@ -53,25 +53,30 @@ class ViewController: UITableViewController {
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
         
-        let thumbnailType = post.thumbnail
-
-        switch thumbnailType {
-        case "link": break
-        case "nsfw": break
-        case "default": break
-        case "self": break
-
-        default:
+        // post thumbnails
+        if post.thumbnail.contains("http") {
             DispatchQueue.main.async {
                 let imageData = post.image_data!
                 cell.thumbnail.image = UIImage(data: imageData)
             }
         }
-            
+        
+        if post.thumbnail == "link" {
+            DispatchQueue.main.async {
+                cell.thumbnail.image = UIImage(named: "link")
+            }
+        }
+        
+//        if post.over_18 {
+//            DispatchQueue.main.async {
+//                cell.thumbnail.image = UIImage(named: "nsfw")
+//            }
+//        }
+        
         return cell
     }
     
-    // post_hint selftext score thumbnail
+    // post_hint selftext url score
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
@@ -80,7 +85,7 @@ class ViewController: UITableViewController {
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         
-        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=30")!) {
+        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/explainlikeimfive.json?limit=30")!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
@@ -112,17 +117,10 @@ class ViewController: UITableViewController {
         post.score = json["data"]["score"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
         
-        // thumbnail links for image_data
-        switch post.thumbnail {
-        case "link": break
-        case "nsfw": break
-        case "default": break
-        case "self": break
-            
-        default:
-            guard let url = URL(string: post.thumbnail) else { break }
+        if post.thumbnail.contains("http") {
+            let url = URL(string: post.thumbnail)
                         
-            if let imageData = try? Data(contentsOf: url) {
+            if let imageData = try? Data(contentsOf: url!) {
                 post.image_data = imageData
             }
         }
