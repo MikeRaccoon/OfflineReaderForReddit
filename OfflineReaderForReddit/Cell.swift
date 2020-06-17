@@ -17,39 +17,52 @@ class Cell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let stackView1 = UIStackView()
+        subreddit = UILabel()
+        
+        author = UILabel()
+        
+        let stackView1 = UIStackView(arrangedSubviews: [subreddit, author])
         stackView1.translatesAutoresizingMaskIntoConstraints = false
-        stackView1.spacing = 5
+       // stackView1.spacing = 5
         stackView1.axis = .horizontal
+       // stackView1.distribution = .fillProportionally
         self.contentView.addSubview(stackView1)
         
         stackView1.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor).isActive = true
         stackView1.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         stackView1.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        stackView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        stackView1.isLayoutMarginsRelativeArrangement = true
+        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+    //    stackView1.centerYAnchor.constraint(equalTo: topAnchor).isActive = true
+      //  stackView1.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        
+        title = UILabel()
+        
+        thumbnail = UIImageView()
+        thumbnail.translatesAutoresizingMaskIntoConstraints = false
+        thumbnail.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        thumbnail.widthAnchor.constraint(equalToConstant: 60).isActive = true
 
-        subreddit = UILabel()
-        stackView1.addArrangedSubview(subreddit)
+        //     thumbnail.frame = CGRect(x: .zero, y: .zero, width: 100, height: 100)
+        // thumbnail.frame.size.width = 3
+        thumbnail.contentMode = .scaleAspectFit
         
-        author = UILabel()
-        stackView1.addArrangedSubview(author)
-        
-        let stackView2 = UIStackView()
+        let stackView2 = UIStackView(arrangedSubviews: [title, thumbnail])
         stackView2.translatesAutoresizingMaskIntoConstraints = false
-        stackView2.spacing = 5
-        stackView2.axis = .vertical
+     //   stackView2.spacing = 20
+        stackView2.axis = .horizontal
         self.contentView.addSubview(stackView2)
+        
+      //  stackView2.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         stackView2.topAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.bottomAnchor).isActive = true
         stackView2.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         stackView2.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-    
-        title = UILabel()
-        stackView2.addArrangedSubview(title)
-        
-        thumbnail = UIImageView()
-        thumbnail.frame = CGRect(x: .zero, y: .zero, width: 10, height: 10)
-        thumbnail.contentMode = .scaleAspectFit
-        stackView2.addArrangedSubview(thumbnail)
+        stackView2.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        stackView2.isLayoutMarginsRelativeArrangement = true
+        stackView2.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+
         
        // post_hint selftext score thumbnail
 

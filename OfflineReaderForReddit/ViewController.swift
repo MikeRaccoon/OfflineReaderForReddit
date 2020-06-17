@@ -79,7 +79,7 @@ class ViewController: UITableViewController {
     // post_hint selftext url score
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 140
     }
     
     @objc func fetchPosts() {
