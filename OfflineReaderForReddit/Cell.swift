@@ -13,68 +13,66 @@ class Cell: UITableViewCell {
     var author: UILabel!
     var title: UILabel!
     var thumbnail: UIImageView!
+    var stackView1: UIStackView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        subreddit = UILabel()
-        
-        author = UILabel()
-        
-        let stackView1 = UIStackView(arrangedSubviews: [subreddit, author])
-        stackView1.translatesAutoresizingMaskIntoConstraints = false
-       // stackView1.spacing = 5
-        stackView1.axis = .horizontal
-       // stackView1.distribution = .fillProportionally
-        self.contentView.addSubview(stackView1)
-        
-        stackView1.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView1.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        stackView1.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        stackView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        stackView1.isLayoutMarginsRelativeArrangement = true
-        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-    //    stackView1.centerYAnchor.constraint(equalTo: topAnchor).isActive = true
-      //  stackView1.heightAnchor.constraint(equalToConstant: 90).isActive = true
-        
         title = UILabel()
+        title.numberOfLines = 0
+        title.translatesAutoresizingMaskIntoConstraints = false
         
         thumbnail = UIImageView()
         thumbnail.translatesAutoresizingMaskIntoConstraints = false
+        thumbnail.contentMode = .scaleAspectFit
         thumbnail.heightAnchor.constraint(equalToConstant: 60).isActive = true
         thumbnail.widthAnchor.constraint(equalToConstant: 60).isActive = true
+     //   thumbnail.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
+        
+        stackView1 = UIStackView(arrangedSubviews: [title, thumbnail])
+        stackView1.spacing = 10
+        stackView1.axis = .horizontal
 
-        //     thumbnail.frame = CGRect(x: .zero, y: .zero, width: 100, height: 100)
-        // thumbnail.frame.size.width = 3
-        thumbnail.contentMode = .scaleAspectFit
+        contentView.addSubview(stackView1)
         
-        let stackView2 = UIStackView(arrangedSubviews: [title, thumbnail])
-        stackView2.translatesAutoresizingMaskIntoConstraints = false
-     //   stackView2.spacing = 20
-        stackView2.axis = .horizontal
-        self.contentView.addSubview(stackView2)
+        //  stackView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        stackView1.translatesAutoresizingMaskIntoConstraints = false
+        stackView1.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor).isActive = true
+        stackView1.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        stackView1.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        stackView1.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        stackView1.isLayoutMarginsRelativeArrangement = true
+        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
         
-      //  stackView2.heightAnchor.constraint(equalToConstant: 40).isActive = true
+      //  stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: title.bounds.size.height).isActive = true
+       // print("test \(title.bounds.size.height)")
         
-        stackView2.topAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        stackView2.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        stackView2.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        stackView2.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        stackView2.isLayoutMarginsRelativeArrangement = true
-        stackView2.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+      //  title.topAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.topAnchor).isActive = true
+      //  title.bottomAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            //  thumbnail.setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .vertical)
+
 
         
-       // post_hint selftext score thumbnail
-
-      //  title.frame.origin.x = 0
+      //  thumbnail.centerYAnchor.constraint(equalTo: stackView1.centerYAnchor).isActive = true
         
+        subreddit = UILabel()
+        subreddit.numberOfLines = 0
         
-        //                postInfo.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: self.bounds.size.width - 50, height: self.bounds.size.height)
-        //  postInfo.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-          //postInfo.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-          //        postInfo.topAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.topAnchor).isActive = true
-          //         postInfo.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-           //postInfo.trailingAnchor.constraint(equalTo: cell.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        author = UILabel()
+        author.numberOfLines = 0
+        
+//        let stackView2 = UIStackView(arrangedSubviews: [subreddit, author])
+//        // stackView2.spacing = 5
+//        stackView2.axis = .horizontal
+//        // stackView2.distribution = .fillProportionally
+//        self.contentView.addSubview(stackView2)
+//
+//        stackView2.translatesAutoresizingMaskIntoConstraints = false
+//        stackView2.topAnchor.constraint(equalTo: stackView1.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//        stackView2.leadingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//        stackView2.trailingAnchor.constraint(equalTo: self.contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        stackView2.isLayoutMarginsRelativeArrangement = true
+//        stackView2.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
     }
 
     required init?(coder aDecoder: NSCoder) {

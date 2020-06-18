@@ -18,6 +18,8 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
+        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
         
         title = "Offline Reader for Reddit"
         container = NSPersistentContainer(name: "Data")
@@ -32,9 +34,6 @@ class ViewController: UITableViewController {
         
         performSelector(inBackground: #selector(fetchPosts), with: nil)
         loadSavedData()
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 100
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -49,10 +48,13 @@ class ViewController: UITableViewController {
         let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
         
-        cell.subreddit.text = post.subreddit
+        cell.subreddit.text = "r/\(post.subreddit)"
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
         
+        
+       // cell.stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: cell.title.bounds.size.height).isActive = true
+        //print("test \(cell.title.bounds.size.height)")
         // post thumbnails
         if post.thumbnail.contains("http") {
             DispatchQueue.main.async {
@@ -78,9 +80,9 @@ class ViewController: UITableViewController {
     
     // post_hint selftext url score
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 140
-    }
+//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 140
+//    }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
