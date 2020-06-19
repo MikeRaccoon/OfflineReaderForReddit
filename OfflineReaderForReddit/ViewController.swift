@@ -73,13 +73,13 @@ class ViewController: UITableViewController {
             }
         }
         
-        if post.thumbnail == "default" {
+        if post.thumbnail == "default" || post.thumbnail == "self" || post.thumbnail == "" {
             DispatchQueue.main.async {
-                cell.thumbnail.image = UIImage(named: "link")
+                cell.thumbnail.image = UIImage(named: "text")
             }
         }
         
-//        if post.title.contains("Man") {
+//        if post.title.contains("There") {
 //            print("123 \(post.thumbnail)")
 //        }
         
