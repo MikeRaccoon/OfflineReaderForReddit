@@ -20,32 +20,53 @@ class Cell: UITableViewCell {
         
         title = UILabel()
         title.numberOfLines = 0
-        title.translatesAutoresizingMaskIntoConstraints = false
         title.setContentHuggingPriority(.required, for: .vertical)
+        title.translatesAutoresizingMaskIntoConstraints = false
+      //  contentView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        title.frame.origin = CGPoint(x: 10, y: 10)
+        contentView.addSubview(title)
         
         thumbnail = UIImageView()
-        thumbnail.translatesAutoresizingMaskIntoConstraints = false
         thumbnail.contentMode = .scaleAspectFit
-        thumbnail.heightAnchor.constraint(equalToConstant: 60).isActive = true
-        thumbnail.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        thumbnail.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-
-     //   thumbnail.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
+        thumbnail.translatesAutoresizingMaskIntoConstraints = false
+    //    thumbnail.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+    //    thumbnail.frame.size = CGSize(width: 60, height: 60)
+      //  thumbnail.clipsToBounds = true
+   //     print(thumbnail.intrinsicContentSize)
+      
+        contentView.addSubview(thumbnail)
         
-        stackView1 = UIStackView(arrangedSubviews: [title, thumbnail])
-        stackView1.spacing = 10
-        stackView1.axis = .horizontal
+    
 
-        contentView.addSubview(stackView1)
-                
-        stackView1.translatesAutoresizingMaskIntoConstraints = false
-        stackView1.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView1.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        stackView1.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        stackView1.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        stackView1.isLayoutMarginsRelativeArrangement = true
-        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        NSLayoutConstraint.activate([
+            title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+            title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            title.trailingAnchor.constraint(equalTo: thumbnail.safeAreaLayoutGuide.leadingAnchor, constant: -10),
+            title.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            
+            thumbnail.heightAnchor.constraint(equalToConstant: 60),
+            thumbnail.widthAnchor.constraint(equalToConstant: 60),
+            thumbnail.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            thumbnail.leadingAnchor.constraint(equalTo: title.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            thumbnail.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+        ])
+
+        //        stackView1 = UIStackView(arrangedSubviews: [title, thumbnail])
+        //        stackView1.spacing = 10
+//        stackView1.axis = .horizontal
+//        contentView.addSubview(stackView1)
+//
+//        stackView1.translatesAutoresizingMaskIntoConstraints = false
+//        stackView1.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor).isActive = true
+//        stackView1.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+//        stackView1.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+//        stackView1.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+//        stackView1.isLayoutMarginsRelativeArrangement = true
+//        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
+        // thumbnail.centerYAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerYAnchor),
+
       //  stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: title.bounds.size.height).isActive = true
        // print("test \(title.bounds.size.height)")
         

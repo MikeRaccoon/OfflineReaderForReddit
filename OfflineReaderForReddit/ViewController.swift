@@ -73,6 +73,16 @@ class ViewController: UITableViewController {
             }
         }
         
+        if post.thumbnail == "default" {
+            DispatchQueue.main.async {
+                cell.thumbnail.image = UIImage(named: "link")
+            }
+        }
+        
+//        if post.title.contains("Man") {
+//            print("123 \(post.thumbnail)")
+//        }
+        
 //        if post.over_18 {
 //            DispatchQueue.main.async {
 //                cell.thumbnail.image = UIImage(named: "nsfw")
