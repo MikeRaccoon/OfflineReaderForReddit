@@ -20,6 +20,8 @@ class ViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.layoutMargins = UIEdgeInsets.zero
+        tableView.separatorInset = UIEdgeInsets.zero
         
         title = "Offline Reader for Reddit"
         container = NSPersistentContainer(name: "Data")
@@ -48,6 +50,7 @@ class ViewController: UITableViewController {
         let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
         
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.subreddit.text = "r/\(post.subreddit)"
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
@@ -55,6 +58,7 @@ class ViewController: UITableViewController {
         
        // cell.stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: cell.title.bounds.size.height).isActive = true
         //print("test \(cell.title.bounds.size.height)")
+        
         // post thumbnails
         if post.thumbnail.contains("http") {
             DispatchQueue.main.async {

@@ -21,12 +21,15 @@ class Cell: UITableViewCell {
         title = UILabel()
         title.numberOfLines = 0
         title.translatesAutoresizingMaskIntoConstraints = false
+        title.setContentHuggingPriority(.required, for: .vertical)
         
         thumbnail = UIImageView()
         thumbnail.translatesAutoresizingMaskIntoConstraints = false
         thumbnail.contentMode = .scaleAspectFit
         thumbnail.heightAnchor.constraint(equalToConstant: 60).isActive = true
         thumbnail.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        thumbnail.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
      //   thumbnail.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .vertical)
         
         stackView1 = UIStackView(arrangedSubviews: [title, thumbnail])
@@ -34,15 +37,14 @@ class Cell: UITableViewCell {
         stackView1.axis = .horizontal
 
         contentView.addSubview(stackView1)
-        
-        //  stackView1.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                
         stackView1.translatesAutoresizingMaskIntoConstraints = false
         stackView1.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor).isActive = true
         stackView1.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor).isActive = true
         stackView1.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor).isActive = true
         stackView1.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
         stackView1.isLayoutMarginsRelativeArrangement = true
-        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+        stackView1.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         
       //  stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: title.bounds.size.height).isActive = true
        // print("test \(title.bounds.size.height)")
