@@ -6,7 +6,7 @@
         <attribute name="id" attributeType="String"/>
         <attribute name="image_data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="post_hint" attributeType="String"/>
-        <attribute name="score" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="score" attributeType="String"/>
         <attribute name="selftext" attributeType="String"/>
         <attribute name="subreddit" attributeType="String"/>
         <attribute name="thumbnail" attributeType="String"/>

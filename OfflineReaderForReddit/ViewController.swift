@@ -54,10 +54,7 @@ class ViewController: UITableViewController {
         cell.subreddit.text = "r/\(post.subreddit)"
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
-        
-        
-       // cell.stackView1.heightAnchor.constraint(greaterThanOrEqualToConstant: cell.title.bounds.size.height).isActive = true
-        //print("test \(cell.title.bounds.size.height)")
+        cell.score.text = "\(cell.score.text ?? "") \(post.score)"
         
         // post thumbnails
         if post.thumbnail.contains("http") {
@@ -88,7 +85,8 @@ class ViewController: UITableViewController {
 //                cell.thumbnail.image = UIImage(named: "nsfw")
 //            }
 //        }
-        
+    
+
         return cell
     }
     
@@ -130,7 +128,7 @@ class ViewController: UITableViewController {
         post.subreddit = json["data"]["subreddit"].stringValue
         post.post_hint = json["data"]["post_hint"].stringValue
         post.selftext = json["data"]["selftext"].stringValue
-        post.score = json["data"]["score"].int32Value
+        post.score = json["data"]["score"].stringValue
         post.thumbnail = json["data"]["thumbnail"].stringValue
         
         if post.thumbnail.contains("http") {
