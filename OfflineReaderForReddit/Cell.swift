@@ -14,7 +14,9 @@ class Cell: UITableViewCell {
     var title: UILabel!
     var thumbnail: UIImageView!
     var score: UILabel!
+    var comments: UILabel!
     var stackView: UIStackView!
+    var spacer: UIView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,33 +34,28 @@ class Cell: UITableViewCell {
         
         score = UILabel()
         score.text = ""
-        score.translatesAutoresizingMaskIntoConstraints = false
+        labelIcon(imageName: "score-black", label: score, width: 10, height: 15)
         
-        let scoreIcon = NSTextAttachment()
-        scoreIcon.image = UIImage(named: "score-black")
-        scoreIcon.bounds = CGRect(x: 0, y: 0, width: 10, height: 15)
-
-        let attachmentString = NSAttributedString(attachment: scoreIcon)
-        let mutatedString = NSMutableAttributedString(string: score.text!)
-        mutatedString.append(attachmentString)
-        score.attributedText = mutatedString
+        comments = UILabel()
+        comments.text = ""
+        labelIcon(imageName: "comments-black", label: comments, width: 16, height: 16)
         
-        stackView = UIStackView(arrangedSubviews: [score])
-        stackView.spacing = 10
+        spacer = UIView()
+        spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        
+        stackView = UIStackView(arrangedSubviews: [score, comments, spacer])
+        stackView.spacing = 8
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-
         contentView.addSubview(stackView)
-        
         
         NSLayoutConstraint.activate([
             title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
             title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             title.trailingAnchor.constraint(equalTo: thumbnail.safeAreaLayoutGuide.leadingAnchor, constant: -10),
-       //     title.bottomAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -10),
             
             thumbnail.heightAnchor.constraint(equalToConstant: 60),
             thumbnail.widthAnchor.constraint(equalToConstant: 60),
@@ -112,5 +109,16 @@ class Cell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func labelIcon(imageName: String, label: UILabel, width: Int, height: Int) {
+        let scoreIcon = NSTextAttachment()
+        scoreIcon.image = UIImage(named: imageName)
+        scoreIcon.bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        let attachmentString = NSAttributedString(attachment: scoreIcon)
+        let mutatedString = NSMutableAttributedString(string: label.text!)
+        mutatedString.append(attachmentString)
+        label.attributedText = mutatedString
     }
 }

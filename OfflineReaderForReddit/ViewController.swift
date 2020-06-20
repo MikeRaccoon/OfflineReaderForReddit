@@ -55,6 +55,7 @@ class ViewController: UITableViewController {
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
+        cell.comments.text = "\(cell.comments.text ?? "") \(post.num_comments)"
         
         // post thumbnails
         if post.thumbnail.contains("http") {
@@ -128,7 +129,8 @@ class ViewController: UITableViewController {
         post.subreddit = json["data"]["subreddit"].stringValue
         post.post_hint = json["data"]["post_hint"].stringValue
         post.selftext = json["data"]["selftext"].stringValue
-        post.score = json["data"]["score"].stringValue
+        post.score = json["data"]["score"].int32Value
+        post.num_comments = json["data"]["num_comments"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
         
         if post.thumbnail.contains("http") {
