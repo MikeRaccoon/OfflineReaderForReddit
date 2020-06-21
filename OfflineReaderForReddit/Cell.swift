@@ -15,6 +15,7 @@ class Cell: UITableViewCell {
     var thumbnail: UIImageView!
     var score: UILabel!
     var comments: UILabel!
+    var timeSince: UILabel!
     var stackView: UIStackView!
     var spacer: UIView!
     
@@ -40,10 +41,14 @@ class Cell: UITableViewCell {
         comments.text = ""
         labelIcon(imageName: "comments-black", label: comments, width: 16, height: 16)
         
+        timeSince = UILabel()
+        timeSince.text = ""
+        labelIcon(imageName: "time-black", label: timeSince, width: 18, height: 18)
+        
         spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
-        stackView = UIStackView(arrangedSubviews: [score, comments, spacer])
+        stackView = UIStackView(arrangedSubviews: [score, comments, timeSince, spacer])
         stackView.spacing = 8
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +72,6 @@ class Cell: UITableViewCell {
             stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
-
         ])
         
 

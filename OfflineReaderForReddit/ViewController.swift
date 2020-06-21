@@ -56,7 +56,8 @@ class ViewController: UITableViewController {
         cell.title.text = post.title
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
         cell.comments.text = "\(cell.comments.text ?? "") \(post.num_comments)"
-        
+        cell.timeSince.text = "\(cell.timeSince.text ?? "") \(post.created_utc.timeSince())"
+
         // post thumbnails
         if post.thumbnail.contains("http") {
             DispatchQueue.main.async {
@@ -184,3 +185,36 @@ class ViewController: UITableViewController {
 //    }
 }
 
+extension Date {
+
+    func timeSince() -> String {
+        let fromDate = self
+        let toDate = Date()
+
+        if let interval = Calendar.current.dateComponents([.year], from: fromDate, to: toDate).year, interval > 0 {
+            return "\(interval)" + "y"
+        }
+
+        if let interval = Calendar.current.dateComponents([.month], from: fromDate, to: toDate).month, interval > 0 {
+            return "\(interval)" + "mo"
+        }
+
+        if let interval = Calendar.current.dateComponents([.day], from: fromDate, to: toDate).day, interval > 0 {
+            return "\(interval)" + "d"
+        }
+
+        if let interval = Calendar.current.dateComponents([.hour], from: fromDate, to: toDate).hour, interval > 0 {
+            return "\(interval)" + "h"
+        }
+
+        if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval > 0 {
+           return "\(interval)" + "m"
+        }
+        
+        if let interval = Calendar.current.dateComponents([.second], from: fromDate, to: toDate).second, interval > 0 {
+           return "\(interval)" + "sec"
+        }
+
+        return "now"
+    }
+}
