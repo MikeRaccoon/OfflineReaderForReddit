@@ -13,6 +13,7 @@ class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
+    var layoutType = "compact"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +25,10 @@ class ViewController: UITableViewController {
         tableView.separatorInset = UIEdgeInsets.zero
         
         title = "Offline Reader for Reddit"
+        
+        let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutSwitch))
+        navigationItem.rightBarButtonItem = layoutBtn
+        
         container = NSPersistentContainer(name: "Data")
         
         container.loadPersistentStores { storeDescription, error in
@@ -165,6 +170,16 @@ class ViewController: UITableViewController {
         } catch {
             print("Fetch failed")
         }
+    }
+    
+    @objc func layoutSwitch() {
+        if layoutType == "compact" {
+            layoutType = "large"
+        } else {
+            layoutType = "compact"
+        }
+        
+        tableView.reloadData()
     }
 //
 //    func getNewestPostDate() -> String {
