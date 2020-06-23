@@ -9,11 +9,12 @@
 import CoreData
 import UIKit
 
+var layoutType = "compact"
+
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
-    var layoutType = "compact"
 
     override func viewDidLoad() {
         super.viewDidLoad()
