@@ -8,8 +8,9 @@
 
 import CoreData
 import UIKit
+//import AVKit
 
-var layoutType = "compact"
+var layoutType = "large"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -67,7 +68,7 @@ class ViewController: UITableViewController {
         // post thumbnails
         if post.thumbnail.contains("http") {
             DispatchQueue.main.async {
-                let imageData = post.image_data!
+                let imageData = post.thumbnail_data!
                 cell.thumbnail.image = UIImage(data: imageData)
             }
         }
@@ -83,6 +84,29 @@ class ViewController: UITableViewController {
                 cell.thumbnail.image = UIImage(named: "text")
             }
         }
+        
+        // post image
+        if post.post_hint == "image" {
+            DispatchQueue.main.async {
+                if let imageData = post.url_data {
+                    cell.postImage.image = UIImage(data: imageData)
+                }
+            }
+        }
+        
+//        if post.post_hint == "hosted:video" {
+//            DispatchQueue.main.async {
+//                let video = post.url_data!
+               // let video = NSData(contentsOf: URL)
+             //   cell.thumbnail.image = UIImage(data: imageData)
+                
+//                let player = AVPlayer(url: <#T##URL#>)
+//                let playerLayer = AVPlayerLayer(player: player)
+//                playerLayer.frame = videoView.bounds
+//                videoView.layer.addSublayer(playerLayer)
+//                player.play()
+//            }
+//        }
         
 //        if post.title.contains("There") {
 //            print("123 \(post.thumbnail)")
@@ -107,7 +131,7 @@ class ViewController: UITableViewController {
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         
-        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/explainlikeimfive.json?limit=30")!) {
+        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=30")!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
@@ -139,13 +163,38 @@ class ViewController: UITableViewController {
         post.score = json["data"]["score"].int32Value
         post.num_comments = json["data"]["num_comments"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
+        post.url = json["data"]["url"].stringValue
         
         if post.thumbnail.contains("http") {
             let url = URL(string: post.thumbnail)
                         
             if let imageData = try? Data(contentsOf: url!) {
-                post.image_data = imageData
+                post.thumbnail_data = imageData
             }
+        }
+        
+        if post.post_hint == "image" {
+            let url = URL(string: post.url)
+
+            if let imageData = try? Data(contentsOf: url!) {
+                post.url_data = imageData
+            }
+        }
+        
+//        if post.post_hint == "hosted:video" {
+//            let url = URL(string: post.url)
+//
+//            if let videoData = try? Data(contentsOf: url!) {
+//                post.url_data = videoData
+//            }
+//        }
+        
+        if post.post_hint == "rich:video" {
+
+        }
+        
+        if post.post_hint == "link" {
+
         }
     }
     

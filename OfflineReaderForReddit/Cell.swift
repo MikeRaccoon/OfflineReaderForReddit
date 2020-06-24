@@ -18,7 +18,7 @@ class Cell: UITableViewCell {
     var timeSince: UILabel!
     var stackView: UIStackView!
     var spacer: UIView!
-    var viewController = ViewController()
+    var postImage: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -57,7 +57,15 @@ class Cell: UITableViewCell {
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
         contentView.addSubview(stackView)
         
+        postImage = UIImageView()
+       // postImage.frame.size = CGSize(width: contentView.frame.width, height: contentView.frame.width / 2)
+        postImage.contentMode = .scaleAspectFit
+        postImage.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(postImage)
+        
         if layoutType == "compact" {
+            postImage.isHidden = true
+            
             NSLayoutConstraint.activate([
                 title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
                 title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
@@ -77,22 +85,31 @@ class Cell: UITableViewCell {
             ])
         } else if layoutType == "large" {
             thumbnail.isHidden = true
+          //  stackView.isHidden = true
+           // title.isHidden = true
             
             NSLayoutConstraint.activate([
                 title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
-                title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+                title.topAnchor.constraint(equalTo: postImage.safeAreaLayoutGuide.bottomAnchor, constant: 10),
                 title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
                 title.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
                 
                 stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor),
                 stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
                 stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
+                stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+                
+                postImage.heightAnchor.constraint(equalToConstant: 480),
+                postImage.widthAnchor.constraint(equalToConstant: 320),
+                postImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
+                postImage.leadingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+                postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor)
+              //  postImage.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
             ])
         }
 
 //
-
         
         // thumbnail.centerYAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerYAnchor),
 

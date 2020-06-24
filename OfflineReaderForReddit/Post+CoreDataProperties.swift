@@ -20,7 +20,7 @@ extension Post {
     @NSManaged public var author: String
     @NSManaged public var created_utc: Date
     @NSManaged public var id: String
-    @NSManaged public var image_data: Data?
+    @NSManaged public var thumbnail_data: Data?
     @NSManaged public var post_hint: String
     @NSManaged public var score: Int32
     @NSManaged public var selftext: String
@@ -28,5 +28,6 @@ extension Post {
     @NSManaged public var thumbnail: String
     @NSManaged public var title: String
     @NSManaged public var num_comments: Int32
-
+    @NSManaged public var url: String
+    @NSManaged public var url_data: Data?
 }
