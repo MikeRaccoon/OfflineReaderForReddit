@@ -21,7 +21,7 @@ class ViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
-        tableView.estimatedRowHeight = 80
+        //tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
@@ -90,6 +90,9 @@ class ViewController: UITableViewController {
             DispatchQueue.main.async {
                 if let imageData = post.url_data {
                     cell.postImage.image = UIImage(data: imageData)
+                  //  cell.postImage.frame.size = CGSize(width: cell.postImage.image!.size.width, height: cell.postImage.image!.size.height)
+                    cell.postImage.heightAnchor.constraint(equalToConstant: cell.postImage.image?.size.height ?? 0).isActive = true
+                   // self.view.setNeedsLayout()
                 }
             }
         }

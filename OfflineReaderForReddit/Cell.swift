@@ -90,7 +90,7 @@ class Cell: UITableViewCell {
             
             NSLayoutConstraint.activate([
                 title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
-                title.topAnchor.constraint(equalTo: postImage.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+              //  title.topAnchor.constraint(equalTo: postImage.safeAreaLayoutGuide.bottomAnchor, constant: 10),
                 title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
                 title.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
                 
@@ -99,13 +99,13 @@ class Cell: UITableViewCell {
                 stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
                 stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
                 
-                postImage.heightAnchor.constraint(equalToConstant: 480),
-                postImage.widthAnchor.constraint(equalToConstant: 320),
+               // postImage.heightAnchor.constraint(equalToConstant: postImage.image?.size.height ?? 0),
+               // postImage.widthAnchor.constraint(equalToConstant: 320),
                 postImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-                postImage.leadingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                postImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor)
-              //  postImage.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+                postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+                postImage.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+                postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+                postImage.bottomAnchor.constraint(equalTo: title.safeAreaLayoutGuide.topAnchor),
             ])
         }
 
