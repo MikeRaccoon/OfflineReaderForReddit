@@ -27,12 +27,12 @@ class Cell: UITableViewCell {
         title.numberOfLines = 0
         title.translatesAutoresizingMaskIntoConstraints = false
         title.frame.origin = CGPoint(x: 10, y: 10)
-        contentView.addSubview(title)
+      //  contentView.addSubview(title)
         
         thumbnail = UIImageView()
         thumbnail.contentMode = .scaleAspectFit
         thumbnail.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(thumbnail)
+      //  contentView.addSubview(thumbnail)
         
         score = UILabel()
         score.text = ""
@@ -55,10 +55,10 @@ class Cell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        contentView.addSubview(stackView)
+        //contentView.addSubview(stackView)
         
         postImage = UIImageView()
-       // postImage.frame.size = CGSize(width: contentView.frame.width, height: contentView.frame.width / 2)
+       // postImage.frame.size = CGSize(width: contentView.frame.width, height: 600)
         postImage.contentMode = .scaleAspectFit
         postImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(postImage)
@@ -89,23 +89,23 @@ class Cell: UITableViewCell {
            // title.isHidden = true
             
             NSLayoutConstraint.activate([
-                title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+              //  title.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
               //  title.topAnchor.constraint(equalTo: postImage.safeAreaLayoutGuide.bottomAnchor, constant: 10),
-                title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-                title.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+              //  title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+              //  title.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
                 
-                stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor),
-                stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
-                stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
-                stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+//                stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor),
+//                stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+//                stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+//                stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
                 
-               // postImage.heightAnchor.constraint(equalToConstant: postImage.image?.size.height ?? 0),
-               // postImage.widthAnchor.constraint(equalToConstant: 320),
+              // postImage.heightAnchor.constraint(equalToConstant: 600),
+             //   postImage.widthAnchor.constraint(equalToConstant: 320),
                 postImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
-                postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+                postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
                 postImage.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
                 postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
-                postImage.bottomAnchor.constraint(equalTo: title.safeAreaLayoutGuide.topAnchor),
+                postImage.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
             ])
         }
 

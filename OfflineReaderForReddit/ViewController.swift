@@ -11,6 +11,7 @@ import UIKit
 //import AVKit
 
 var layoutType = "large"
+var online = false
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -41,7 +42,10 @@ class ViewController: UITableViewController {
             }
         }
         
-        performSelector(inBackground: #selector(fetchPosts), with: nil)
+        if online {
+          performSelector(inBackground: #selector(fetchPosts), with: nil)
+        }
+        
         loadSavedData()
     }
     
@@ -91,7 +95,7 @@ class ViewController: UITableViewController {
                 if let imageData = post.url_data {
                     cell.postImage.image = UIImage(data: imageData)
                   //  cell.postImage.frame.size = CGSize(width: cell.postImage.image!.size.width, height: cell.postImage.image!.size.height)
-                    cell.postImage.heightAnchor.constraint(equalToConstant: cell.postImage.image?.size.height ?? 0).isActive = true
+                  //  cell.postImage.heightAnchor.constraint(equalToConstant: cell.postImage.image?.size.height ?? 0).isActive = true
                    // self.view.setNeedsLayout()
                 }
             }
@@ -128,7 +132,7 @@ class ViewController: UITableViewController {
     // post_hint selftext url score
     
 //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 140
+//        return 340
 //    }
     
     @objc func fetchPosts() {
