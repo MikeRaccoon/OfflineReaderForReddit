@@ -11,12 +11,13 @@ import UIKit
 //import AVKit
 
 var layoutType = "large"
-var online = false
+var offlineMode = true
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
+    var cellHeight: CGFloat = 80
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +43,9 @@ class ViewController: UITableViewController {
             }
         }
         
-        if online {
-          performSelector(inBackground: #selector(fetchPosts), with: nil)
+        if !offlineMode {
+            performSelector(inBackground: #selector(fetchPosts), with: nil)
+            
         }
         
         loadSavedData()
@@ -91,14 +93,24 @@ class ViewController: UITableViewController {
         
         // post image
         if post.post_hint == "image" {
-            DispatchQueue.main.async {
-                if let imageData = post.url_data {
-                    cell.postImage.image = UIImage(data: imageData)
-                  //  cell.postImage.frame.size = CGSize(width: cell.postImage.image!.size.width, height: cell.postImage.image!.size.height)
-                  //  cell.postImage.heightAnchor.constraint(equalToConstant: cell.postImage.image?.size.height ?? 0).isActive = true
-                   // self.view.setNeedsLayout()
-                }
+            //  DispatchQueue.main.async {
+            if let imageData = post.url_data {
+                //   var image = cell.postImage.image
+                cell.postImage.image = UIImage(data: imageData)
+                
+                let cellWidth = cell.bounds.width
+                let imageWidth = cell.postImage.image!.size.width
+                let imageHeight = cell.postImage.image!.size.height
+                let aspect = cellWidth / (imageWidth / imageHeight)
+                print(aspect)
+                
+                cell.postImage.heightAnchor.constraint(equalToConstant: aspect).isActive = true
+                
+                
+                // self.view.setNeedsLayout()
+                // print(cell.postImage.image?.size.height)
             }
+            //   }
         }
         
 //        if post.post_hint == "hosted:video" {
@@ -128,12 +140,22 @@ class ViewController: UITableViewController {
 
         return cell
     }
+
+//    func setImage(image: UIImage) {
+//        let aspect = image.size.width / image.size.height
+//
+//        aspectConstraint = NSLayoutConstraint(item: postedImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: postedImageView, attribute: NSLayoutAttribute.Height, multiplier: aspect, constant: 0.0)
+//
+//        postedImageView.image = image
+//    }
     
     // post_hint selftext url score
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 340
-//    }
+//        override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//
+//
+//            return cellHeight
+//        }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()

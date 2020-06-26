@@ -99,8 +99,8 @@ class Cell: UITableViewCell {
 //                stackView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
 //                stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
                 
-              // postImage.heightAnchor.constraint(equalToConstant: 600),
-             //   postImage.widthAnchor.constraint(equalToConstant: 320),
+              //  postImage.heightAnchor.constraint(equalToConstant: 300),
+               // postImage.widthAnchor.constraint(equalToConstant: 320),
                 postImage.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
                 postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
                 postImage.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
