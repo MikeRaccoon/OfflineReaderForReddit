@@ -93,24 +93,16 @@ class ViewController: UITableViewController {
         
         // post image
         if post.post_hint == "image" {
-            //  DispatchQueue.main.async {
             if let imageData = post.url_data {
-                //   var image = cell.postImage.image
                 cell.postImage.image = UIImage(data: imageData)
                 
-                let cellWidth = cell.bounds.width
+                let deviceWidth = tableView.bounds.width
                 let imageWidth = cell.postImage.image!.size.width
                 let imageHeight = cell.postImage.image!.size.height
-                let aspect = cellWidth / (imageWidth / imageHeight)
-                print(aspect)
-                
+                let aspect = deviceWidth / (imageWidth / imageHeight)
+
                 cell.postImage.heightAnchor.constraint(equalToConstant: aspect).isActive = true
-                
-                
-                // self.view.setNeedsLayout()
-                // print(cell.postImage.image?.size.height)
             }
-            //   }
         }
         
 //        if post.post_hint == "hosted:video" {
