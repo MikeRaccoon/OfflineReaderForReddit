@@ -63,7 +63,6 @@ class ViewController: UITableViewController {
         let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
         
-        cell.layoutMargins = UIEdgeInsets.zero
         cell.subreddit.text = "r/\(post.subreddit)"
         cell.author.text = "Posted by u/\(post.author)"
         cell.title.text = post.title

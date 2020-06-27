@@ -23,6 +23,9 @@ class Cell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.selectionStyle = .none
+        self.layoutMargins = UIEdgeInsets.zero
+        
         title = UILabel()
         title.numberOfLines = 0
         title.font = UIFont.boldSystemFont(ofSize: 20)
@@ -64,7 +67,7 @@ class Cell: UITableViewCell {
         contentView.addSubview(postImage)
         
         NSLayoutConstraint.activate([
-            title.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
+          //  title.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
             title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
             title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             
@@ -85,7 +88,7 @@ class Cell: UITableViewCell {
                 thumbnail.leadingAnchor.constraint(equalTo: title.safeAreaLayoutGuide.trailingAnchor, constant: 10),
                 thumbnail.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
                 
-                stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor),
+                stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor, constant: 0),
             ])
         } else if layoutType == "large" {
             thumbnail.isHidden = true
