@@ -12,7 +12,7 @@ import UIKit
 
 var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/all.json?limit=30"
+let testUrl = "https://www.reddit.com/r/all.json?limit=10"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -129,26 +129,8 @@ class ViewController: UITableViewController {
 //                cell.thumbnail.image = UIImage(named: "nsfw")
 //            }
 //        }
-    
-
         return cell
     }
-
-//    func setImage(image: UIImage) {
-//        let aspect = image.size.width / image.size.height
-//
-//        aspectConstraint = NSLayoutConstraint(item: postedImageView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: postedImageView, attribute: NSLayoutAttribute.Height, multiplier: aspect, constant: 0.0)
-//
-//        postedImageView.image = image
-//    }
-    
-    // post_hint selftext url score
-    
-//        override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//
-//
-//            return cellHeight
-//        }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
@@ -160,14 +142,16 @@ class ViewController: UITableViewController {
             
             print("Received \(jsonPostArray.count) new posts.")
             
-            DispatchQueue.main.async { [unowned self] in
+            DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
                 for jsonPost in jsonPostArray {
                     let post = Post(context: self.container.viewContext)
                     self.configure(post: post, usingJSON: jsonPost)
                 }
                 
-                self.saveContext()
-                self.loadSavedData()
+                DispatchQueue.main.async {
+                    self.saveContext()
+                    self.loadSavedData()
+                }
             }
         } else {
             print("error")
