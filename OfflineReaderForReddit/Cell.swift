@@ -19,6 +19,7 @@ class Cell: UITableViewCell {
     var stackView: UIStackView!
     var spacer: UIView!
     var postImage: UIImageView!
+    var selfText: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,7 +31,7 @@ class Cell: UITableViewCell {
         title.numberOfLines = 0
         title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.frame.origin = CGPoint(x: 10, y: 10)
+       // title.frame.origin = CGPoint(x: 10, y: 10)
         contentView.addSubview(title)
         
         thumbnail = UIImageView()
@@ -66,6 +67,11 @@ class Cell: UITableViewCell {
         postImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(postImage)
         
+        selfText = UILabel()
+        selfText.numberOfLines = 3
+        selfText.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(selfText)
+        
         NSLayoutConstraint.activate([
           //  title.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
             title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -78,6 +84,7 @@ class Cell: UITableViewCell {
         
         if layoutType == "compact" {
             postImage.isHidden = true
+            selfText.isHidden = true
             
             NSLayoutConstraint.activate([
                 title.trailingAnchor.constraint(equalTo: thumbnail.safeAreaLayoutGuide.leadingAnchor, constant: -10),
@@ -100,6 +107,11 @@ class Cell: UITableViewCell {
                 postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
                 postImage.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
                 postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+                
+                selfText.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+                selfText.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+                selfText.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+                selfText.bottomAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor),
                 
                 stackView.topAnchor.constraint(equalTo: postImage.safeAreaLayoutGuide.bottomAnchor),
             ])

@@ -11,7 +11,8 @@ import UIKit
 //import AVKit
 
 var layoutType = "large"
-var offlineMode = true
+var offlineMode = false
+let testUrl = "https://www.reddit.com/r/all.json?limit=30"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -69,7 +70,8 @@ class ViewController: UITableViewController {
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
         cell.comments.text = "\(cell.comments.text ?? "") \(post.num_comments)"
         cell.timeSince.text = "\(cell.timeSince.text ?? "") \(post.created_utc.timeSince())"
-
+        cell.selfText.text = post.selftext
+        
         // post thumbnails
         if post.thumbnail.contains("http") {
             DispatchQueue.main.async {
@@ -151,7 +153,7 @@ class ViewController: UITableViewController {
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         
-        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com/r/all.json?limit=30")!) {
+        if let data = try? String(contentsOf: URL(string: testUrl)!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
