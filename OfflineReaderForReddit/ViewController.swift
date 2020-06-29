@@ -8,11 +8,12 @@
 
 import CoreData
 import UIKit
-//import AVKit
+import AVKit
+import AVFoundation
 
 var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/all.json?limit=10"
+let testUrl = "https://www.reddit.com/r/funny.json?limit=10"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -106,6 +107,46 @@ class ViewController: UITableViewController {
             }
         }
         
+        // post video
+        if post.post_hint == "hosted:video" {
+            print("+")
+            if let videoUrl = URL(string: post.hls_url!) {
+                let player = AVPlayer(url: videoUrl)
+                let playerLayer = AVPlayerLayer(player: player)
+                print(videoUrl)
+                playerLayer.frame = cell.videoView.bounds
+                //  playerLayer.backgroundColor =
+                playerLayer.zPosition = 2
+                cell.videoView.layer.addSublayer(playerLayer)
+                
+                let deviceWidth = tableView.bounds.width
+                let videoWidth = CGFloat(post.reddit_video_width)
+                let videoHeight = CGFloat(post.reddit_video_height)
+                let aspect = deviceWidth / (videoWidth / videoHeight)
+                
+                cell.videoView.heightAnchor.constraint(equalToConstant: aspect).isActive = true
+            }
+            
+            
+            
+            
+            
+            //player.play()
+            
+
+        }
+        
+//        if let indexes = tableView.indexPathsForVisibleRows {
+//            for index in indexes {
+//                if index.row == 0 {
+//                    print(tableView.visibleCells)
+//                }
+//            }
+//        }
+
+
+    //    print(tableView.visibleCells.count)
+        
 //        if post.post_hint == "hosted:video" {
 //            DispatchQueue.main.async {
 //                let video = post.url_data!
@@ -131,6 +172,8 @@ class ViewController: UITableViewController {
 //        }
         return cell
     }
+    
+    
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
@@ -170,6 +213,9 @@ class ViewController: UITableViewController {
         post.num_comments = json["data"]["num_comments"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
         post.url = json["data"]["url"].stringValue
+        post.hls_url = json["data"]["media"]["reddit_video"]["hls_url"].stringValue
+        post.reddit_video_height = json["data"]["media"]["reddit_video"]["height"].int32Value
+        post.reddit_video_width = json["data"]["media"]["reddit_video"]["width"].int32Value
         
         if post.thumbnail.contains("http") {
             let url = URL(string: post.thumbnail)
@@ -235,6 +281,7 @@ class ViewController: UITableViewController {
             layoutType = "compact"
         }
         
+        print(tableView.visibleCells)
         tableView.reloadData()
     }
 //

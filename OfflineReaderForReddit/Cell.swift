@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class Cell: UITableViewCell {
     var subreddit: UILabel!
@@ -20,6 +22,7 @@ class Cell: UITableViewCell {
     var spacer: UIView!
     var postImage: UIImageView!
     var selfText: UILabel!
+    var videoView: UIView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -67,6 +70,13 @@ class Cell: UITableViewCell {
         postImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(postImage)
         
+        videoView = UIView()
+        videoView.contentMode = .scaleAspectFit
+        videoView.translatesAutoresizingMaskIntoConstraints = false
+        videoView.frame.size = CGSize(width: 120, height: 120)
+       // videoView.backgroundColor = .red
+        contentView.addSubview(videoView)
+        
         selfText = UILabel()
         selfText.numberOfLines = 3
         selfText.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +94,7 @@ class Cell: UITableViewCell {
         
         if layoutType == "compact" {
             postImage.isHidden = true
+            videoView.isHidden = true
             selfText.isHidden = true
             
             NSLayoutConstraint.activate([
@@ -107,6 +118,11 @@ class Cell: UITableViewCell {
                 postImage.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
                 postImage.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
                 postImage.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
+                
+//                videoView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+//                videoView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
+//                videoView.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor),
+//                videoView.centerXAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.centerXAnchor),
                 
                 selfText.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor, constant: 10),
                 selfText.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
