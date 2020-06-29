@@ -12,23 +12,24 @@ import AVKit
 import AVFoundation
 
 var layoutType = "large"
-var offlineMode = false
+var offlineMode = true
 let testUrl = "https://www.reddit.com/r/funny.json?limit=10"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
-    var cellHeight: CGFloat = 80
+    var cellWidth: CGFloat!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
-        //tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
+        
+        cellWidth = tableView.bounds.width
         
         title = "Offline Reader for Reddit"
         
@@ -98,38 +99,29 @@ class ViewController: UITableViewController {
             if let imageData = post.url_data {
                 cell.postImage.image = UIImage(data: imageData)
                 
-                let deviceWidth = tableView.bounds.width
-                let imageWidth = cell.postImage.image!.size.width
-                let imageHeight = cell.postImage.image!.size.height
-                let aspect = deviceWidth / (imageWidth / imageHeight)
+                let aspect = aspectRatio(width: cell.postImage.image!.size.width, height: cell.postImage.image!.size.height)
 
                 cell.postImage.heightAnchor.constraint(equalToConstant: aspect).isActive = true
+                cell.stackView.topAnchor.constraint(equalTo: cell.postImage.safeAreaLayoutGuide.bottomAnchor).isActive = true
             }
         }
         
         // post video
         if post.post_hint == "hosted:video" {
-            print("+")
+            
             if let videoUrl = URL(string: post.hls_url!) {
                 let player = AVPlayer(url: videoUrl)
                 let playerLayer = AVPlayerLayer(player: player)
-                print(videoUrl)
-                playerLayer.frame = cell.videoView.bounds
-                //  playerLayer.backgroundColor =
-                playerLayer.zPosition = 2
+                let aspect = aspectRatio(width: CGFloat(post.reddit_video_width), height: CGFloat(post.reddit_video_height))
+                
+                playerLayer.frame.size.width = cellWidth
+                playerLayer.frame.size.height = aspect
                 cell.videoView.layer.addSublayer(playerLayer)
                 
-                let deviceWidth = tableView.bounds.width
-                let videoWidth = CGFloat(post.reddit_video_width)
-                let videoHeight = CGFloat(post.reddit_video_height)
-                let aspect = deviceWidth / (videoWidth / videoHeight)
-                
                 cell.videoView.heightAnchor.constraint(equalToConstant: aspect).isActive = true
+                cell.stackView.topAnchor.constraint(equalTo: cell.videoView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+                print(cell.videoView.bounds)
             }
-            
-            
-            
-            
             
             //player.play()
             
@@ -283,6 +275,12 @@ class ViewController: UITableViewController {
         
         print(tableView.visibleCells)
         tableView.reloadData()
+    }
+    
+    func aspectRatio(width: CGFloat, height: CGFloat) -> CGFloat {
+        let aspect = cellWidth / (width / height)
+        
+        return aspect
     }
 //
 //    func getNewestPostDate() -> String {
