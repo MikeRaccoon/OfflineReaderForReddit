@@ -20,6 +20,7 @@ class ViewController: UITableViewController {
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
     var cellWidth: CGFloat!
+    var isPlayingVideo = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +74,7 @@ class ViewController: UITableViewController {
         cell.comments.text = "\(cell.comments.text ?? "") \(post.num_comments)"
         cell.timeSince.text = "\(cell.timeSince.text ?? "") \(post.created_utc.timeSince())"
         cell.selfText.text = post.selftext
+        cell.postHint = post.post_hint
         
         // post thumbnails
         if post.thumbnail.contains("http") {
@@ -110,8 +112,8 @@ class ViewController: UITableViewController {
         if post.post_hint == "hosted:video" {
             
             if let videoUrl = URL(string: post.hls_url!) {
-                let player = AVPlayer(url: videoUrl)
-                let playerLayer = AVPlayerLayer(player: player)
+                cell.player = AVPlayer(url: videoUrl)
+                let playerLayer = AVPlayerLayer(player: cell.player)
                 let aspect = aspectRatio(width: CGFloat(post.reddit_video_width), height: CGFloat(post.reddit_video_height))
                 
                 playerLayer.frame.size.width = cellWidth
@@ -122,10 +124,6 @@ class ViewController: UITableViewController {
                 cell.stackView.topAnchor.constraint(equalTo: cell.videoView.safeAreaLayoutGuide.bottomAnchor).isActive = true
                 print(cell.videoView.bounds)
             }
-            
-            //player.play()
-            
-
         }
         
 //        if let indexes = tableView.indexPathsForVisibleRows {
@@ -137,25 +135,6 @@ class ViewController: UITableViewController {
 //        }
 
 
-    //    print(tableView.visibleCells.count)
-        
-//        if post.post_hint == "hosted:video" {
-//            DispatchQueue.main.async {
-//                let video = post.url_data!
-               // let video = NSData(contentsOf: URL)
-             //   cell.thumbnail.image = UIImage(data: imageData)
-                
-//                let player = AVPlayer(url: <#T##URL#>)
-//                let playerLayer = AVPlayerLayer(player: player)
-//                playerLayer.frame = videoView.bounds
-//                videoView.layer.addSublayer(playerLayer)
-//                player.play()
-//            }
-//        }
-        
-//        if post.title.contains("There") {
-//            print("123 \(post.thumbnail)")
-//        }
         
 //        if post.over_18 {
 //            DispatchQueue.main.async {
@@ -165,7 +144,27 @@ class ViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let activeCell = cell as? Cell else { return }
+        
+        if activeCell.postHint == "hosted:video" && !isPlayingVideo {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                activeCell.player.play()
+                self.isPlayingVideo = true
+            }
+        }
+    }
     
+    override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let inactiveCell = cell as? Cell else { return }
+        
+        if inactiveCell.postHint == "hosted:video" && isPlayingVideo {
+            DispatchQueue.main.async() {
+                inactiveCell.player.pause()
+                self.isPlayingVideo = false
+            }
+        }
+    }
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
@@ -273,7 +272,6 @@ class ViewController: UITableViewController {
             layoutType = "compact"
         }
         
-        print(tableView.visibleCells)
         tableView.reloadData()
     }
     
