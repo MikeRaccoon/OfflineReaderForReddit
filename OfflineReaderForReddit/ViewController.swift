@@ -166,6 +166,13 @@ class ViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Comments") as? CommentsViewController {
+            vc.post = posts[indexPath.row]
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
         

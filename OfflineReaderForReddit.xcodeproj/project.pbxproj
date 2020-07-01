@@ -21,6 +21,7 @@
 		27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */; };
 		27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */; };
 		27B47D372497D2B100F377E0 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B47D362497D2B100F377E0 /* Cell.swift */; };
+		27E72F1624AD1F98000EC492 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E72F1524AD1F98000EC492 /* CommentsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		27AA4E312492B43600CD88B2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		27B47D362497D2B100F377E0 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		27E72F1524AD1F98000EC492 /* CommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
 				27B47D362497D2B100F377E0 /* Cell.swift */,
+				27E72F1524AD1F98000EC492 /* CommentsViewController.swift */,
 				27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */,
 				27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */,
 				2792B6CB249245F400A9BEC3 /* AppDelegate.swift */,
@@ -285,6 +288,7 @@
 				27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */,
 				27B47D372497D2B100F377E0 /* Cell.swift in Sources */,
 				275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */,
+				27E72F1624AD1F98000EC492 /* CommentsViewController.swift in Sources */,
 				27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
