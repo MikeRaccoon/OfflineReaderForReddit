@@ -57,7 +57,7 @@ class Cell: UITableViewCell {
         
         score = UILabel()
         score.text = ""
-        labelIcon(imageName: "score-black", label: score, width: 10, height: 15)
+        labelIcon(imageName: "score-black", label: score, width: 10, height: 16)
         
         comments = UILabel()
         comments.text = ""
@@ -65,7 +65,7 @@ class Cell: UITableViewCell {
         
         timeSince = UILabel()
         timeSince.text = ""
-        labelIcon(imageName: "time-black", label: timeSince, width: 18, height: 18)
+        labelIcon(imageName: "time-black", label: timeSince, width: 16, height: 16)
         
         spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -95,7 +95,6 @@ class Cell: UITableViewCell {
         NSLayoutConstraint.activate([
             subreddit.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             subreddit.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-        //    subreddit.trailingAnchor.constraint(equalTo: subreddit.safeAreaLayoutGuide.leadingAnchor, constant: -10),
 
             author.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
             author.leadingAnchor.constraint(equalTo: subreddit.safeAreaLayoutGuide.trailingAnchor, constant: 10),
