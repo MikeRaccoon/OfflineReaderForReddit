@@ -32,11 +32,22 @@ class Cell: UITableViewCell {
         self.selectionStyle = .none
         self.layoutMargins = UIEdgeInsets.zero
         
+        subreddit = UILabel()
+        subreddit.numberOfLines = 1
+        subreddit.font = UIFont.boldSystemFont(ofSize: 12)
+        subreddit.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(subreddit)
+        
+        author = UILabel()
+        author.numberOfLines = 1
+        author.font = UIFont.boldSystemFont(ofSize: 12)
+        author.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(author)
+        
         title = UILabel()
         title.numberOfLines = 0
         title.font = UIFont.boldSystemFont(ofSize: 20)
         title.translatesAutoresizingMaskIntoConstraints = false
-       // title.frame.origin = CGPoint(x: 10, y: 10)
         contentView.addSubview(title)
         
         thumbnail = UIImageView()
@@ -82,8 +93,15 @@ class Cell: UITableViewCell {
         contentView.addSubview(selfText)
         
         NSLayoutConstraint.activate([
-          //  title.heightAnchor.constraint(greaterThanOrEqualToConstant: 40),
-            title.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 8),
+            subreddit.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            subreddit.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+        //    subreddit.trailingAnchor.constraint(equalTo: subreddit.safeAreaLayoutGuide.leadingAnchor, constant: -10),
+
+            author.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+            author.leadingAnchor.constraint(equalTo: subreddit.safeAreaLayoutGuide.trailingAnchor, constant: 10),
+            author.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            
+            title.topAnchor.constraint(equalTo: subreddit.safeAreaLayoutGuide.bottomAnchor, constant: 8),
             title.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             
             stackView.leadingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.leadingAnchor),
@@ -101,7 +119,7 @@ class Cell: UITableViewCell {
                 
                 thumbnail.heightAnchor.constraint(equalToConstant: 60),
                 thumbnail.widthAnchor.constraint(equalToConstant: 60),
-                thumbnail.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 10),
+                thumbnail.topAnchor.constraint(equalTo: author.safeAreaLayoutGuide.bottomAnchor, constant: 10),
                 thumbnail.leadingAnchor.constraint(equalTo: title.safeAreaLayoutGuide.trailingAnchor, constant: 10),
                 thumbnail.trailingAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.trailingAnchor, constant: -10),
                 
@@ -143,11 +161,7 @@ class Cell: UITableViewCell {
         
       //  thumbnail.centerYAnchor.constraint(equalTo: stackView1.centerYAnchor).isActive = true
         
-        subreddit = UILabel()
-        subreddit.numberOfLines = 0
-        
-        author = UILabel()
-        author.numberOfLines = 0
+
         
 //        let stackView2 = UIStackView(arrangedSubviews: [subreddit, author])
 //        // stackView2.spacing = 5

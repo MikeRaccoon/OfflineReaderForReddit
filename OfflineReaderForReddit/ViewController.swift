@@ -12,8 +12,8 @@ import AVKit
 import AVFoundation
 
 var layoutType = "large"
-var offlineMode = true
-let testUrl = "https://www.reddit.com/r/funny.json?limit=10"
+var offlineMode = false
+let testUrl = "https://www.reddit.com/r/all.json?limit=10"
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -68,7 +68,7 @@ class ViewController: UITableViewController {
         let post = posts[indexPath.row]
         
         cell.subreddit.text = "r/\(post.subreddit)"
-        cell.author.text = "Posted by u/\(post.author)"
+        cell.author.text = "u/\(post.author)"
         cell.title.text = post.title
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
         cell.comments.text = "\(cell.comments.text ?? "") \(post.num_comments)"
@@ -122,7 +122,6 @@ class ViewController: UITableViewController {
                 
                 cell.videoView.heightAnchor.constraint(equalToConstant: aspect).isActive = true
                 cell.stackView.topAnchor.constraint(equalTo: cell.videoView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-                print(cell.videoView.bounds)
             }
         }
         
