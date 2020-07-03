@@ -13,7 +13,11 @@ import AVFoundation
 
 var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/all.json?limit=10"
+let testUrl = "https://www.reddit.com/r/funny.json?limit=100"
+var looper: AVPlayerLooper?
+var playerLooper: NSObject?
+var playerLayer:AVPlayerLayer!
+var queuePlayer: AVQueuePlayer?
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
@@ -21,9 +25,15 @@ class ViewController: UITableViewController {
     let dispatchGroup = DispatchGroup()
     var cellWidth: CGFloat!
     var isPlayingVideo = false
+    let spinner = SpinnerViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addChild(spinner)
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
         tableView.rowHeight = UITableView.automaticDimension
@@ -47,12 +57,30 @@ class ViewController: UITableViewController {
             }
         }
         
+            //createSpinnerView()
+        
         if !offlineMode {
             performSelector(inBackground: #selector(fetchPosts), with: nil)
-            
         }
         
-        loadSavedData()
+        //spinner.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
+        //self.spinner.frame = CGRect(x:0, y:0, width:30, height:30)
+      //  self.spinner.startAnimating()
+    }
+    
+    func createSpinnerView() {
+        let child = SpinnerViewController()
+
+        addChild(child)
+        child.view.frame = view.frame
+        view.addSubview(child.view)
+        child.didMove(toParent: self)
+
+//        DispatchQueue.main.async {
+//            child.willMove(toParent: nil)
+//            child.view.removeFromSuperview()
+//            child.removeFromParent()
+//        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -113,6 +141,8 @@ class ViewController: UITableViewController {
             
             if let videoUrl = URL(string: post.hls_url!) {
                 cell.player = AVPlayer(url: videoUrl)
+                cell.player.automaticallyWaitsToMinimizeStalling = true
+                
                 let playerLayer = AVPlayerLayer(player: cell.player)
                 let aspect = aspectRatio(width: CGFloat(post.reddit_video_width), height: CGFloat(post.reddit_video_height))
                 
@@ -122,6 +152,10 @@ class ViewController: UITableViewController {
                 
                 cell.videoView.heightAnchor.constraint(equalToConstant: aspect).isActive = true
                 cell.stackView.topAnchor.constraint(equalTo: cell.videoView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+                
+//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: cell.player.currentItem, queue: nil) { (_) in
+//                    cell.player.seek(to: CMTime.zero)
+//                }
             }
         }
         
@@ -189,6 +223,7 @@ class ViewController: UITableViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    self.spinner.view.isHidden = false
                     self.saveContext()
                     self.loadSavedData()
                 }
@@ -266,6 +301,7 @@ class ViewController: UITableViewController {
             posts = try container.viewContext.fetch(request)
             print("Got \(posts.count) posts")
             tableView.reloadData()
+            spinner.view.isHidden = true
         } catch {
             print("Fetch failed")
         }
