@@ -13,17 +13,17 @@ import AVFoundation
 
 var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/funny.json?limit=100"
+let testUrl = "https://www.reddit.com/r/funny.json?limit=10"
 var looper: AVPlayerLooper?
 var playerLooper: NSObject?
 var playerLayer:AVPlayerLayer!
 var queuePlayer: AVQueuePlayer?
+var cellWidth: CGFloat!
 
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
-    var cellWidth: CGFloat!
     var isPlayingVideo = false
     let spinner = SpinnerViewController()
 
@@ -317,11 +317,7 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func aspectRatio(width: CGFloat, height: CGFloat) -> CGFloat {
-        let aspect = cellWidth / (width / height)
-        
-        return aspect
-    }
+
 //
 //    func getNewestPostDate() -> String {
 //        let formatter = ISO8601DateFormatter()
@@ -373,4 +369,10 @@ extension Date {
 
         return "now"
     }
+}
+
+func aspectRatio(width: CGFloat, height: CGFloat) -> CGFloat {
+    let aspect = cellWidth / (width / height)
+    
+    return aspect
 }
