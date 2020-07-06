@@ -246,6 +246,7 @@ class ViewController: UITableViewController {
         post.thumbnail = json["data"]["thumbnail"].stringValue
         post.url = json["data"]["url"].stringValue
         post.hls_url = json["data"]["media"]["reddit_video"]["hls_url"].stringValue
+        post.permalink = json["data"]["permalink"].stringValue
         post.reddit_video_height = json["data"]["media"]["reddit_video"]["height"].int32Value
         post.reddit_video_width = json["data"]["media"]["reddit_video"]["width"].int32Value
         

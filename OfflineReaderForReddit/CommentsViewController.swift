@@ -22,19 +22,11 @@ class CommentsViewController: UITableViewController {
         
         cellWidth = tableView.bounds.width
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "PostComment")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -47,8 +39,9 @@ class CommentsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = Cell.init(style: .default, reuseIdentifier: "Post")
-            
+        let cell = Cell.init(style: .default, reuseIdentifier: "PostComment")
+        
+        if indexPath.row == 0 {
             cell.subreddit.text = "r/\(post.subreddit)"
             cell.author.text = "u/\(post.author)"
             cell.title.text = post.title
@@ -109,8 +102,11 @@ class CommentsViewController: UITableViewController {
                     
                 }
             }
+        }
+
             
-  
+
+            
             return cell
         }
     

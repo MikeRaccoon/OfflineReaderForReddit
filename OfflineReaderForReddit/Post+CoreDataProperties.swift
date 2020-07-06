@@ -31,6 +31,7 @@ extension Post {
     @NSManaged public var url: String
     @NSManaged public var url_data: Data?
     @NSManaged public var hls_url: String?
+    @NSManaged public var permalink: String
     @NSManaged public var reddit_video_height: Int32
     @NSManaged public var reddit_video_width: Int32
 }

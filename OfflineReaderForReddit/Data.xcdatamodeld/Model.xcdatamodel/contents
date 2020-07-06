@@ -6,6 +6,7 @@
         <attribute name="hls_url" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="num_comments" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="permalink" attributeType="String"/>
         <attribute name="post_hint" attributeType="String"/>
         <attribute name="reddit_video_height" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="reddit_video_width" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -24,6 +25,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="283"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="298"/>
     </elements>
 </model>
