@@ -13,7 +13,7 @@ import AVFoundation
 
 var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/funny.json?limit=10"
+let testUrl = "https://www.reddit.com/r/explainlikeimfive.json?limit=10"
 var looper: AVPlayerLooper?
 var playerLooper: NSObject?
 var playerLayer:AVPlayerLayer!
@@ -48,7 +48,6 @@ class ViewController: UITableViewController {
         navigationItem.rightBarButtonItem = layoutBtn
         
         container = NSPersistentContainer(name: "Data")
-        
         container.loadPersistentStores { storeDescription, error in
             self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             

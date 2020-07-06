@@ -6,16 +6,14 @@
 //  Copyright © 2020 Mike. All rights reserved.
 //
 
+import CoreData
 import UIKit
 import AVKit
 
 class CommentsViewController: UITableViewController {
+    var container: NSPersistentContainer!
     var post = Post()
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        self.post = Post()
-//        super.init(coder: aDecoder)
-//    }
+    var comments = [Comment]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,18 +24,34 @@ class CommentsViewController: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
+        
+        container = NSPersistentContainer(name: "Data")
+        container.loadPersistentStores { storeDescription, error in
+            self.container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+            
+            if let error = error {
+                print("Unresolved error \(error)")
+            }
+        }
+                
+        if !offlineMode {
+            performSelector(inBackground: #selector(fetchComments), with: nil)
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+
+        if section == 1 {
+            return comments.count
+        }
+        
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Cell.init(style: .default, reuseIdentifier: "PostComment")
         
@@ -77,7 +91,7 @@ class CommentsViewController: UITableViewController {
                     cell.postImage.image = UIImage(data: imageData)
                     
                     let aspect = aspectRatio(width: cell.postImage.image!.size.width, height: cell.postImage.image!.size.height)
-
+                    
                     cell.postImage.heightAnchor.constraint(equalToConstant: aspect).isActive = true
                     cell.stackView.topAnchor.constraint(equalTo: cell.postImage.safeAreaLayoutGuide.bottomAnchor).isActive = true
                 }
@@ -103,12 +117,66 @@ class CommentsViewController: UITableViewController {
                 }
             }
         }
-
+        
+        return cell
+    }
+    
+    
+    @objc func fetchComments() {
+        if let data = try? String(contentsOf: URL(string: "https://www.reddit.com\(post.permalink).json")!) {
+            // SwiftyJSON
+            let jsonComments = JSON(parseJSON: data)
+            let jsonCommentArray = jsonComments[1]["data"]["children"].arrayValue
             
-
+            print("Received \(jsonCommentArray.count) new comments.")
             
-            return cell
+            DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
+                for jsonComment in jsonCommentArray {
+                    let comment = Comment(context: self.container.viewContext)
+                    self.configure(comment: comment, usingJSON: jsonComment)
+                }
+                
+                DispatchQueue.main.async {
+                    // self.spinner.view.isHidden = false
+                    // self.saveContext()
+                    // self.loadSavedData()
+                }
+            }
+        } else {
+            print("error")
         }
+    }
+    
+    func configure(comment: Comment, usingJSON json: JSON) {
+        comment.id = json["data"]["id"].stringValue
+        comment.score = json["data"]["score"].int32Value
+        comment.author = json["data"]["author"].stringValue
+        comment.body = json["data"]["body"].stringValue
+        comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
+    }
+    
+    func saveContext() {
+        if container.viewContext.hasChanges {
+            do {
+                try container.viewContext.save()
+            } catch {
+                print("An error occured while saving: \(error)")
+            }
+        }
+    }
+    
+    func loadSavedData() {
+        let request = Comment.createFetchRequest()
+        
+        do {
+            comments = try container.viewContext.fetch(request)
+            print("Got \(comments.count) comments")
+            tableView.reloadData()
+         //   spinner.view.isHidden = true
+        } catch {
+            print("Fetch failed")
+        }
+    }
     
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
