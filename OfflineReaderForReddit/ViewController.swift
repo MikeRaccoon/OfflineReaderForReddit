@@ -224,7 +224,7 @@ class ViewController: UITableViewController {
                 DispatchQueue.main.async {
                     self.spinner.view.isHidden = false
                     self.saveContext()
-                    self.loadSavedData()
+                    self.loadSavedData(sortBy: "created_utc", ascending: false)
                 }
             }
         } else {
@@ -292,10 +292,10 @@ class ViewController: UITableViewController {
         }
     }
     
-    func loadSavedData() {
+    func loadSavedData(sortBy: String, ascending: Bool) {
         let request = Post.createFetchRequest()
-//        let sort = NSSortDescriptor(key: "created_utc", ascending: false)
-//        request.sortDescriptors = [sort]
+        let sort = NSSortDescriptor(key: sortBy, ascending: ascending)
+        request.sortDescriptors = [sort]
                 
         do {
             posts = try container.viewContext.fetch(request)
@@ -317,8 +317,6 @@ class ViewController: UITableViewController {
         tableView.reloadData()
     }
     
-
-//
 //    func getNewestPostDate() -> String {
 //        let formatter = ISO8601DateFormatter()
 //
