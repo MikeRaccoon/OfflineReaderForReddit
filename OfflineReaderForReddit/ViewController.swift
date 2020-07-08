@@ -45,7 +45,9 @@ class ViewController: UITableViewController {
         title = "Offline Reader for Reddit"
         
         let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutSwitch))
-        navigationItem.rightBarButtonItem = layoutBtn
+        let sortBtn = UIBarButtonItem(title: "sort", style: .plain, target: self, action: #selector(sortPosts))
+
+        navigationItem.rightBarButtonItems = [sortBtn, layoutBtn]
         
         container = NSPersistentContainer(name: "Data")
         container.loadPersistentStores { storeDescription, error in
@@ -65,6 +67,30 @@ class ViewController: UITableViewController {
         //spinner.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         //self.spinner.frame = CGRect(x:0, y:0, width:30, height:30)
       //  self.spinner.startAnimating()
+    }
+    
+    @objc func sortPosts() {
+        let ac = UIAlertController(title: "Sorting by", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Best", style: .default) { _ in
+            self.setValue(UIColor.blue, forKey: "titleTextColor")
+        })
+        ac.addAction(UIAlertAction(title: "Hot", style: .default) { _ in
+
+        })
+        ac.addAction(UIAlertAction(title: "New", style: .default) { _ in
+
+        })
+        ac.addAction(UIAlertAction(title: "Top", style: .default) { _ in
+
+        })
+        ac.addAction(UIAlertAction(title: "Controversial", style: .default) { _ in
+
+        })
+        ac.addAction(UIAlertAction(title: "Rising", style: .default) { _ in
+
+        })
+
+        present(ac, animated: true)
     }
     
     func createSpinnerView() {
@@ -151,10 +177,6 @@ class ViewController: UITableViewController {
                 
                 cell.videoView.heightAnchor.constraint(equalToConstant: aspect).isActive = true
                 cell.stackView.topAnchor.constraint(equalTo: cell.videoView.safeAreaLayoutGuide.bottomAnchor).isActive = true
-                
-//                NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: cell.player.currentItem, queue: nil) { (_) in
-//                    cell.player.seek(to: CMTime.zero)
-//                }
             }
         }
         
