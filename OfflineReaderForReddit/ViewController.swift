@@ -11,7 +11,14 @@ import UIKit
 import AVKit
 import AVFoundation
 
-var layoutType = "large"
+enum layoutTypes {
+    case large
+    case compact
+}
+
+var layoutType = layoutTypes.large
+
+//var layoutType = "large"
 var offlineMode = false
 let testUrl = "https://www.reddit.com/r/explainlikeimfive.json?limit=10"
 var looper: AVPlayerLooper?
@@ -44,7 +51,7 @@ class ViewController: UITableViewController {
         
         title = "Offline Reader for Reddit"
         
-        let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutSwitch))
+        let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutTypeSwitch))
         let sortBtn = UIBarButtonItem(title: "sort", style: .plain, target: self, action: #selector(sortPosts))
 
         navigationItem.rightBarButtonItems = [sortBtn, layoutBtn]
@@ -329,11 +336,11 @@ class ViewController: UITableViewController {
         }
     }
     
-    @objc func layoutSwitch() {
-        if layoutType == "compact" {
-            layoutType = "large"
+    @objc func layoutTypeSwitch() {
+        if layoutType == layoutTypes.compact {
+            layoutType = layoutTypes.large
         } else {
-            layoutType = "compact"
+            layoutType = layoutTypes.compact
         }
         
         tableView.reloadData()

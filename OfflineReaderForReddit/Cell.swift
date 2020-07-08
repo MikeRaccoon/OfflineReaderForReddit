@@ -108,7 +108,7 @@ class Cell: UITableViewCell {
             stackView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        if layoutType == "compact" {
+        if layoutType == layoutTypes.compact {
             postImage.isHidden = true
             videoView.isHidden = true
             selfText.isHidden = true
@@ -124,7 +124,7 @@ class Cell: UITableViewCell {
                 
                 stackView.topAnchor.constraint(equalTo: title.safeAreaLayoutGuide.bottomAnchor, constant: 0)
             ])
-        } else if layoutType == "large" {
+        } else if layoutType == layoutTypes.large {
             thumbnail.isHidden = true
             
             NSLayoutConstraint.activate([
