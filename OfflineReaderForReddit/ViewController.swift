@@ -33,6 +33,17 @@ class ViewController: UITableViewController {
     let dispatchGroup = DispatchGroup()
     var isPlayingVideo = false
     let spinner = SpinnerViewController()
+    
+    enum sortTypes {
+        case best
+        case hot
+        case new
+        case top
+        case controversial
+        case rising
+    }
+    
+    var sortType = sortTypes.new
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,25 +89,46 @@ class ViewController: UITableViewController {
     
     @objc func sortPosts() {
         let ac = UIAlertController(title: "Sorting by", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Best", style: .default) { _ in
-            self.setValue(UIColor.blue, forKey: "titleTextColor")
-        })
-        ac.addAction(UIAlertAction(title: "Hot", style: .default) { _ in
+        
+        let sortBest = UIAlertAction(title: "Best", style: .default) { _ in
 
-        })
-        ac.addAction(UIAlertAction(title: "New", style: .default) { _ in
+        }
+        ac.addAction(sortBest)
+        
+        let sortHot = UIAlertAction(title: "Hot", style: .default) { _ in
 
-        })
-        ac.addAction(UIAlertAction(title: "Top", style: .default) { _ in
+        }
+        ac.addAction(sortHot)
+        
+        let sortNew = UIAlertAction(title: "New", style: .default) { _ in
+            self.loadSavedData(sortBy: "created_utc", ascending: false)
+        }
+        ac.addAction(sortNew)
+        
+        let sortTop = UIAlertAction(title: "Top", style: .default) { _ in
+            self.loadSavedData(sortBy: "score", ascending: false)
+        }
+        ac.addAction(sortTop)
+        
+        let sortControversial = UIAlertAction(title: "Controversial", style: .default) { _ in
 
-        })
-        ac.addAction(UIAlertAction(title: "Controversial", style: .default) { _ in
-
-        })
-        ac.addAction(UIAlertAction(title: "Rising", style: .default) { _ in
-
-        })
-
+        }
+        ac.addAction(sortControversial)
+   
+        let sortRising = UIAlertAction(title: "Rising", style: .default) { _ in
+            
+        }
+        ac.addAction(sortRising)
+        
+        switch sortType {
+        case .best: sortBest.setValue(UIColor.red, forKey: "titleTextColor")
+        case .hot: sortHot.setValue(UIColor.red, forKey: "titleTextColor")
+        case .new: sortNew.setValue(UIColor.red, forKey: "titleTextColor")
+        case .top: sortTop.setValue(UIColor.red, forKey: "titleTextColor")
+        case .controversial: sortControversial.setValue(UIColor.red, forKey: "titleTextColor")
+        case .rising: sortRising.setValue(UIColor.red, forKey: "titleTextColor")
+        }
+        
         present(ac, animated: true)
     }
     
