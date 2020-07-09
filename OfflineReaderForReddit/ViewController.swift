@@ -20,7 +20,8 @@ var layoutType = layoutTypes.large
 
 //var layoutType = "large"
 var offlineMode = false
-let testUrl = "https://www.reddit.com/r/explainlikeimfive.json?limit=10"
+let testSub = "explainlikeimfive"
+let postsLimit = 10
 var looper: AVPlayerLooper?
 var playerLooper: NSObject?
 var playerLayer:AVPlayerLayer!
@@ -34,17 +35,27 @@ class ViewController: UITableViewController {
     var isPlayingVideo = false
     let spinner = SpinnerViewController()
     
-    enum sortTypes {
-        case best
-        case hot
-        case new
-        case top
-        case controversial
-        case rising
+    enum sortTypes: String {
+        case best = "/best"
+        case hot = "/hot"
+        case new = "/new"
+        case top = "/top"
+        case controversial = "/controversial"
+        case rising = "/rising"
     }
     
-    var sortType = sortTypes.new
-
+    var sortType = sortTypes.hot
+    
+    enum sortDates: String {
+        case hour = "/?t=hour"
+        case day = "/?t=day"
+        case week = "/?t=week"
+        case month = "/?t=month"
+        case year = "/?t=year"
+        case all = "/?t=all"
+    }
+    var sortByDate = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,36 +98,52 @@ class ViewController: UITableViewController {
       //  self.spinner.startAnimating()
     }
     
+    func sortProcessing(ascending: Bool) {
+        spinner.view.isHidden = false
+        
+        if !offlineMode {
+            performSelector(inBackground: #selector(fetchPosts), with: nil)
+        } else {
+            self.loadSavedData(ascending: ascending)
+        }
+    }
+    
     @objc func sortPosts() {
         let ac = UIAlertController(title: "Sorting by", message: nil, preferredStyle: .alert)
         
         let sortBest = UIAlertAction(title: "Best", style: .default) { _ in
-
+            self.sortType = sortTypes.best
+            self.sortProcessing(ascending: false)
         }
         ac.addAction(sortBest)
         
         let sortHot = UIAlertAction(title: "Hot", style: .default) { _ in
-
+            self.sortType = sortTypes.hot
+            self.sortProcessing(ascending: false)
         }
         ac.addAction(sortHot)
         
         let sortNew = UIAlertAction(title: "New", style: .default) { _ in
-            self.loadSavedData(sortBy: "created_utc", ascending: false)
+            self.sortType = sortTypes.new
+            self.sortProcessing(ascending: false)
         }
         ac.addAction(sortNew)
         
         let sortTop = UIAlertAction(title: "Top", style: .default) { _ in
-            self.loadSavedData(sortBy: "score", ascending: false)
+            self.sortType = sortTypes.top
+            self.setSortDate(ascending: false)
         }
         ac.addAction(sortTop)
         
         let sortControversial = UIAlertAction(title: "Controversial", style: .default) { _ in
-
+            self.sortType = sortTypes.controversial
+            self.setSortDate(ascending: true)
         }
         ac.addAction(sortControversial)
    
         let sortRising = UIAlertAction(title: "Rising", style: .default) { _ in
-            
+            self.sortType = sortTypes.rising
+            self.sortProcessing(ascending: false)
         }
         ac.addAction(sortRising)
         
@@ -128,6 +155,48 @@ class ViewController: UITableViewController {
         case .controversial: sortControversial.setValue(UIColor.red, forKey: "titleTextColor")
         case .rising: sortRising.setValue(UIColor.red, forKey: "titleTextColor")
         }
+        
+        present(ac, animated: true)
+    }
+    
+    func setSortDate(ascending: Bool) {
+        let ac = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+      
+        let hour = UIAlertAction(title: "This hour", style: .default) { _ in
+            self.sortByDate = sortDates.hour.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(hour)
+        
+        let day = UIAlertAction(title: "Today", style: .default) { _ in
+            self.sortByDate = sortDates.day.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(day)
+        
+        let week = UIAlertAction(title: "This week", style: .default) { _ in
+            self.sortByDate = sortDates.week.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(week)
+        
+        let month = UIAlertAction(title: "This month", style: .default) { _ in
+            self.sortByDate = sortDates.month.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(month)
+        
+        let year = UIAlertAction(title: "This year", style: .default) { _ in
+            self.sortByDate = sortDates.year.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(year)
+        
+        let all = UIAlertAction(title: "All time", style: .default) { _ in
+            self.sortByDate = sortDates.all.rawValue
+            self.sortProcessing(ascending: ascending)
+        }
+        ac.addAction(all)
         
         present(ac, animated: true)
     }
@@ -268,8 +337,9 @@ class ViewController: UITableViewController {
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
+        let url = "https://www.reddit.com/r/\(testSub + sortType.rawValue + sortByDate).json?limit=\(postsLimit)"
         
-        if let data = try? String(contentsOf: URL(string: testUrl)!) {
+        if let data = try? String(contentsOf: URL(string: url)!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
             let jsonPostArray = jsonPosts["data"]["children"].arrayValue
@@ -285,7 +355,7 @@ class ViewController: UITableViewController {
                 DispatchQueue.main.async {
                     self.spinner.view.isHidden = false
                     self.saveContext()
-                    self.loadSavedData(sortBy: "created_utc", ascending: false)
+                    self.loadSavedData(ascending: false)
                 }
             }
         } else {
@@ -302,6 +372,7 @@ class ViewController: UITableViewController {
         post.post_hint = json["data"]["post_hint"].stringValue
         post.selftext = json["data"]["selftext"].stringValue
         post.score = json["data"]["score"].int32Value
+        post.upvote_ratio = json["data"]["upvote_ratio"].floatValue
         post.num_comments = json["data"]["num_comments"].int32Value
         post.thumbnail = json["data"]["thumbnail"].stringValue
         post.url = json["data"]["url"].stringValue
@@ -353,11 +424,29 @@ class ViewController: UITableViewController {
         }
     }
     
-    func loadSavedData(sortBy: String, ascending: Bool) {
+    func loadSavedData(ascending: Bool) {
         let request = Post.createFetchRequest()
-        let sort = NSSortDescriptor(key: sortBy, ascending: ascending)
-        request.sortDescriptors = [sort]
-                
+
+        var sortValue: String
+        
+        switch sortType {
+        case .best: sortValue = "upvote_ratio"
+        case .hot: sortValue = "score"
+        case .new: sortValue = "created_utc"
+        case .top: sortValue = "score"
+        case .controversial: sortValue = "upvote_ratio"
+        case .rising: sortValue = "score"
+        }
+        
+        if sortType == .hot {
+            let sort1 = NSSortDescriptor(key: sortValue, ascending: ascending)
+            let sort2 = NSSortDescriptor(key: "created_utc", ascending: ascending)
+            request.sortDescriptors = [sort1, sort2]
+        } else {
+            let sort = NSSortDescriptor(key: sortValue, ascending: ascending)
+            request.sortDescriptors = [sort]
+        }
+        
         do {
             posts = try container.viewContext.fetch(request)
             print("Got \(posts.count) posts")

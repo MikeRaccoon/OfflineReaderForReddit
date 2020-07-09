@@ -23,6 +23,7 @@ extension Post {
     @NSManaged public var thumbnail_data: Data?
     @NSManaged public var post_hint: String
     @NSManaged public var score: Int32
+    @NSManaged public var upvote_ratio: Float
     @NSManaged public var selftext: String
     @NSManaged public var subreddit: String
     @NSManaged public var thumbnail: String

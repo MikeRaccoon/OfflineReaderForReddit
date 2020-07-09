@@ -23,6 +23,7 @@
         <attribute name="thumbnail" attributeType="String"/>
         <attribute name="thumbnail_data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="title" attributeType="String"/>
+        <attribute name="upvote_ratio" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="url" attributeType="String"/>
         <attribute name="url_data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <uniquenessConstraints>
@@ -32,7 +33,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="298"/>
         <element name="Comment" positionX="-63" positionY="108" width="128" height="118"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="28"/>
     </elements>
 </model>
