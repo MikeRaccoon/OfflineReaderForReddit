@@ -40,20 +40,16 @@ class CommentsViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        if section == 1 {
-            return comments.count
-        }
-        
         return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return comments.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Cell.init(style: .default, reuseIdentifier: "PostComment")
+        let comment = comments[indexPath.row]
         
         if indexPath.row == 0 {
             cell.subreddit.text = "r/\(post.subreddit)"
@@ -116,11 +112,17 @@ class CommentsViewController: UITableViewController {
                     
                 }
             }
+        } else {
+            cell.subreddit.isHidden = true
+            cell.comments.isHidden = true
+            cell.timeSince.isHidden = true
+            cell.selfText.text = comment.body
+            cell.score.text = "\(cell.score.text ?? "") \(comment.score)"
+            cell.author.text = "u/\(comment.author ?? "")"
         }
         
         return cell
     }
-    
     
     @objc func fetchComments() {
         if let data = try? String(contentsOf: URL(string: "https://www.reddit.com\(post.permalink).json")!) {
@@ -138,8 +140,8 @@ class CommentsViewController: UITableViewController {
                 
                 DispatchQueue.main.async {
                     // self.spinner.view.isHidden = false
-                    // self.saveContext()
-                    // self.loadSavedData()
+                     self.saveContext()
+                     self.loadSavedData()
                 }
             }
         } else {
@@ -153,6 +155,31 @@ class CommentsViewController: UITableViewController {
         comment.author = json["data"]["author"].stringValue
         comment.body = json["data"]["body"].stringValue
         comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
+        
+//        var newComment: Comment!
+//
+//        // see if this author exists already
+//        let commentRequest = Comment.createFetchRequest()
+//        commentRequest.predicate = NSPredicate(format: "id == %@", json["data"]["id"].stringValue)
+//
+//        if let comments = try? container.viewContext.fetch(commentRequest) {
+//            if comments.count > 0 {
+//                // we have this comment already
+//                newComment = comments[0]
+//            }
+//        }
+//
+//        if newComment == nil {
+//            // we didn't find a saved comment - create a new one!
+//            let comment = Comment(context: container.viewContext)
+//
+//            newComment = comment
+//        }
+//
+//        // use the comment, either saved or new
+//        comment = newComment
+        
+    //    print(comment.score)
     }
     
     func saveContext() {

@@ -35,4 +35,5 @@ extension Post {
     @NSManaged public var permalink: String
     @NSManaged public var reddit_video_height: Int32
     @NSManaged public var reddit_video_width: Int32
+    @NSManaged public var comment: Comment?
 }

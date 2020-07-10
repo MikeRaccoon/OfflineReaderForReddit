@@ -2,7 +2,7 @@
 //  Comment+CoreDataProperties.swift
 //  OfflineReaderForReddit
 //
-//  Created by Mike on 2020-07-07.
+//  Created by Mike on 2020-07-10.
 //  Copyright © 2020 Mike. All rights reserved.
 //
 //
@@ -22,5 +22,5 @@ extension Comment {
     @NSManaged public var author: String?
     @NSManaged public var body: String?
     @NSManaged public var created_utc: Date?
-
+    @NSManaged public var posts: Post?
 }
