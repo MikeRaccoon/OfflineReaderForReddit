@@ -18,6 +18,7 @@ extension Comment {
     }
 
     @NSManaged public var id: String?
+    @NSManaged public var link_id: String? 
     @NSManaged public var score: Int32
     @NSManaged public var author: String?
     @NSManaged public var body: String?

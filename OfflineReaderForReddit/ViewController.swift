@@ -367,6 +367,7 @@ class ViewController: UITableViewController {
         post.author = json["data"]["author"].stringValue
         post.title = json["data"]["title"].stringValue
         post.id = json["data"]["id"].stringValue
+        post.name = json["data"]["name"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
         post.subreddit = json["data"]["subreddit"].stringValue
         post.post_hint = json["data"]["post_hint"].stringValue

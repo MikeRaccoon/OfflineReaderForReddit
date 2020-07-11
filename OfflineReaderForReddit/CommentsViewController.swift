@@ -151,6 +151,7 @@ class CommentsViewController: UITableViewController {
     
     func configure(comment: Comment, usingJSON json: JSON) {
         comment.id = json["data"]["id"].stringValue
+        comment.link_id = json["data"]["link_id"].stringValue
         comment.score = json["data"]["score"].int32Value
         comment.author = json["data"]["author"].stringValue
         comment.body = json["data"]["body"].stringValue
@@ -194,6 +195,7 @@ class CommentsViewController: UITableViewController {
     
     func loadSavedData() {
         let request = Comment.createFetchRequest()
+        request.predicate = NSPredicate(format: "link_id == %@", post.name)
         
         do {
             comments = try container.viewContext.fetch(request)

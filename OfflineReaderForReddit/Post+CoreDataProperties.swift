@@ -18,6 +18,7 @@ extension Post {
     }
 
     @NSManaged public var author: String
+    @NSManaged public var name: String
     @NSManaged public var created_utc: Date
     @NSManaged public var id: String
     @NSManaged public var thumbnail_data: Data?
