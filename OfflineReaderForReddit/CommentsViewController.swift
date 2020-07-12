@@ -197,6 +197,9 @@ class CommentsViewController: UITableViewController {
         let request = Comment.createFetchRequest()
         request.predicate = NSPredicate(format: "link_id == %@", post.name)
         
+        let sort = NSSortDescriptor(key: "score", ascending: false)
+        request.sortDescriptors = [sort]
+        
         do {
             comments = try container.viewContext.fetch(request)
             print("Got \(comments.count) comments")
