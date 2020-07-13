@@ -6,8 +6,9 @@
         <attribute name="created_utc" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="link_id" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="parent_id" attributeType="String"/>
         <attribute name="score" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="posts" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comment" inverseEntity="Post"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="author" attributeType="String"/>
@@ -29,7 +30,6 @@
         <attribute name="upvote_ratio" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="url" attributeType="String"/>
         <attribute name="url_data" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
-        <relationship name="comment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Comment" inverseName="posts" inverseEntity="Comment"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="id"/>
@@ -37,7 +37,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Comment" positionX="-63" positionY="108" width="128" height="148"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="343"/>
+        <element name="Comment" positionX="-63" positionY="108" width="128" height="163"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="328"/>
     </elements>
 </model>

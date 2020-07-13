@@ -17,11 +17,12 @@ extension Comment {
         return NSFetchRequest<Comment>(entityName: "Comment")
     }
 
-    @NSManaged public var id: String?
-    @NSManaged public var link_id: String? 
+    @NSManaged public var id: String
+    @NSManaged public var link_id: String
     @NSManaged public var score: Int32
-    @NSManaged public var author: String?
-    @NSManaged public var body: String?
-    @NSManaged public var created_utc: Date?
-    @NSManaged public var posts: Post?
+    @NSManaged public var author: String
+    @NSManaged public var body: String
+    @NSManaged public var created_utc: Date
+    @NSManaged public var name: String
+    @NSManaged public var parent_id: String
 }

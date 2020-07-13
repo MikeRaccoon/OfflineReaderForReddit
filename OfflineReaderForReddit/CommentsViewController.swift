@@ -133,19 +133,29 @@ class CommentsViewController: UITableViewController {
             print("Received \(jsonCommentArray.count) new comments.")
             
             DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
-                for jsonComment in jsonCommentArray {
-                    let comment = Comment(context: self.container.viewContext)
-                    self.configure(comment: comment, usingJSON: jsonComment)
-                }
+                self.fetchAllComments(jsonArray: jsonCommentArray)
                 
                 DispatchQueue.main.async {
-                    // self.spinner.view.isHidden = false
+                     //self.spinner.view.isHidden = false
                      self.saveContext()
                      self.loadSavedData()
                 }
             }
         } else {
             print("error")
+        }
+    }
+    
+    func fetchAllComments(jsonArray: [JSON]) {
+        for jsonComment in jsonArray {
+            let comment = Comment(context: self.container.viewContext)
+            configure(comment: comment, usingJSON: jsonComment)
+            
+            let nextLevel = jsonComment["data"]["replies"]["data"]["children"].arrayValue
+
+            if nextLevel.count > 0 {
+                fetchAllComments(jsonArray: nextLevel)
+            }
         }
     }
     
@@ -156,6 +166,10 @@ class CommentsViewController: UITableViewController {
         comment.author = json["data"]["author"].stringValue
         comment.body = json["data"]["body"].stringValue
         comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
+        comment.name = json["data"]["name"].stringValue
+        comment.parent_id = json["data"]["parent_id"].stringValue
+                
+        //print(comment.name)
         
 //        var newComment: Comment!
 //
