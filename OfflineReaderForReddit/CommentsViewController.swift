@@ -116,7 +116,9 @@ class CommentsViewController: UITableViewController {
             cell.subreddit.isHidden = true
             cell.comments.isHidden = true
             cell.timeSince.isHidden = true
-            cell.selfText.text = comment.body
+            //cell.selfText.text = comment.body
+            cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id)"
+
             cell.score.text = "\(cell.score.text ?? "") \(comment.score)"
             cell.author.text = "u/\(comment.author ?? "")"
         }
@@ -211,8 +213,11 @@ class CommentsViewController: UITableViewController {
         let request = Comment.createFetchRequest()
         request.predicate = NSPredicate(format: "link_id == %@", post.name)
         
-        let sort = NSSortDescriptor(key: "score", ascending: false)
-        request.sortDescriptors = [sort]
+        //let sort = NSSortDescriptor(key: "score", ascending: false)
+        let name = NSSortDescriptor(key: "name", ascending: false)
+        let parent_id = NSSortDescriptor(key: "parent_id", ascending: false)
+
+        request.sortDescriptors = [name, parent_id]
         
         do {
             comments = try container.viewContext.fetch(request)
