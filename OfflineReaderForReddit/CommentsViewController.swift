@@ -211,7 +211,13 @@ class CommentsViewController: UITableViewController {
     
     func loadSavedData() {
         let request = Comment.createFetchRequest()
-        request.predicate = NSPredicate(format: "link_id == %@", post.name)
+      //  request.predicate = NSPredicate(format: "link_id == %@", post.name)
+        
+        
+        let predicateLinkId = NSPredicate(format: "link_id == %@", post.name)
+        let predicateParentId = NSPredicate(format: "parent_id == link_id") // filters 1st level
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateLinkId, predicateParentId])
+
         
         //let sort = NSSortDescriptor(key: "score", ascending: false)
         let name = NSSortDescriptor(key: "name", ascending: false)
