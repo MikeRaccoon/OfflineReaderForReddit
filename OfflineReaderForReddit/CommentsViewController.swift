@@ -117,7 +117,7 @@ class CommentsViewController: UITableViewController {
             cell.comments.isHidden = true
             cell.timeSince.isHidden = true
             //cell.selfText.text = comment.body
-            cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id)"
+            cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id) body: \(comment.body)"
 
             cell.score.text = "\(cell.score.text ?? "") \(comment.score)"
             cell.author.text = "u/\(comment.author ?? "")"
@@ -173,30 +173,18 @@ class CommentsViewController: UITableViewController {
                 
         //print(comment.name)
         
-//        var newComment: Comment!
-//
-//        // see if this author exists already
-//        let commentRequest = Comment.createFetchRequest()
-//        commentRequest.predicate = NSPredicate(format: "id == %@", json["data"]["id"].stringValue)
-//
-//        if let comments = try? container.viewContext.fetch(commentRequest) {
-//            if comments.count > 0 {
-//                // we have this comment already
-//                newComment = comments[0]
-//            }
-//        }
-//
-//        if newComment == nil {
-//            // we didn't find a saved comment - create a new one!
-//            let comment = Comment(context: container.viewContext)
-//
-//            newComment = comment
-//        }
-//
-//        // use the comment, either saved or new
-//        comment = newComment
+        var newComment: Comment!
+
+        // see if this comment exists already
+        let commentRequest = Comment.createFetchRequest()
+        commentRequest.predicate = NSPredicate(format: "id == %@", comment.id)
         
-    //    print(comment.score)
+        if let comments = try? container.viewContext.fetch(commentRequest) {
+            if comments.count > 0 {
+                // we have this author already
+                newComment = comments[0]
+            }
+        }
     }
     
     func saveContext() {
@@ -212,11 +200,12 @@ class CommentsViewController: UITableViewController {
     func loadSavedData() {
         let request = Comment.createFetchRequest()
       //  request.predicate = NSPredicate(format: "link_id == %@", post.name)
+        request.returnsDistinctResults = true
+
         
-        
-        let predicateLinkId = NSPredicate(format: "link_id == %@", post.name)
+        let predicateLinkId = NSPredicate(format: "link_id == %@", post.name) // filters comments for particular post
         let predicateParentId = NSPredicate(format: "parent_id == link_id") // filters 1st level
-        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateLinkId, predicateParentId])
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateLinkId])
 
         
         //let sort = NSSortDescriptor(key: "score", ascending: false)
