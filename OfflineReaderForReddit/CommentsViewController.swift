@@ -171,20 +171,21 @@ class CommentsViewController: UITableViewController {
         comment.name = json["data"]["name"].stringValue
         comment.parent_id = json["data"]["parent_id"].stringValue
                 
-        //print(comment.name)
-        
-        var newComment: Comment!
+
+        //var newComment: Comment!
 
         // see if this comment exists already
-        let commentRequest = Comment.createFetchRequest()
-        commentRequest.predicate = NSPredicate(format: "id == %@", comment.id)
-        
-        if let comments = try? container.viewContext.fetch(commentRequest) {
-            if comments.count > 0 {
-                // we have this author already
-                newComment = comments[0]
-            }
-        }
+  //      let commentRequest = Comment.createFetchRequest()
+    //    commentRequest.predicate = NSPredicate(format: "id == %@", comment.id)
+
+      //  if let comments = try? container.viewContext.fetch(commentRequest) {
+        //    if comments.count > 0 {
+                // we have this comment already
+               // print(comments.count)
+              //  newComment = comments[0]
+                // mainManagedObjectContext.deleteObject(x)
+          //  }
+        //}
     }
     
     func saveContext() {
@@ -200,8 +201,9 @@ class CommentsViewController: UITableViewController {
     func loadSavedData() {
         let request = Comment.createFetchRequest()
       //  request.predicate = NSPredicate(format: "link_id == %@", post.name)
-        request.returnsDistinctResults = true
-
+        //request.returnsDistinctResults = true
+    
+        //request.resultType = NSFetchRequestResultType.dictionaryResultType
         
         let predicateLinkId = NSPredicate(format: "link_id == %@", post.name) // filters comments for particular post
         let predicateParentId = NSPredicate(format: "parent_id == link_id") // filters 1st level
