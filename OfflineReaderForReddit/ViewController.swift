@@ -55,6 +55,7 @@ class ViewController: UITableViewController {
         case all = "/?t=all"
     }
     var sortByDate = ""
+    var shareLink = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -288,6 +289,11 @@ class ViewController: UITableViewController {
             }
         }
         
+        // Share button
+       // cell.share.text = post.url
+        let tap = UITapGestureRecognizer(target: self, action: #selector(share))
+        cell.share.addGestureRecognizer(tap)
+        
 //        if let indexes = tableView.indexPathsForVisibleRows {
 //            for index in indexes {
 //                if index.row == 0 {
@@ -306,6 +312,15 @@ class ViewController: UITableViewController {
         return cell
     }
     
+    @objc func share(sender: UILabel) {
+        
+        print(sender.description)
+//        var url = [URL(string: shareLink)!]
+//
+//        let ac = UIActivityViewController(activityItems: url, applicationActivities: nil)
+//        present(ac, animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let activeCell = cell as? Cell else { return }
         
@@ -316,6 +331,8 @@ class ViewController: UITableViewController {
             }
         }
     }
+    
+    
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let inactiveCell = cell as? Cell else { return }

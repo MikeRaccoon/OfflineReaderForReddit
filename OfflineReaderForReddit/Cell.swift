@@ -70,6 +70,7 @@ class Cell: UITableViewCell {
         
         share = UILabel()
         share.text = ""
+        share.isUserInteractionEnabled = true
         labelIcon(imageName: "share-black", label: share, width: 16, height: 16)
         
         spacer = UIView()
