@@ -11,23 +11,6 @@ import UIKit
 import AVKit
 import AVFoundation
 
-enum layoutTypes {
-    case large
-    case compact
-}
-
-var layoutType = layoutTypes.large
-
-//var layoutType = "large"
-var offlineMode = false
-let testSub = "explainlikeimfive"
-let postsLimit = 10
-var looper: AVPlayerLooper?
-var playerLooper: NSObject?
-var playerLayer:AVPlayerLayer!
-var queuePlayer: AVQueuePlayer?
-var cellWidth: CGFloat!
-
 class ViewController: UITableViewController {
     var container: NSPersistentContainer!
     var posts = [Post]()

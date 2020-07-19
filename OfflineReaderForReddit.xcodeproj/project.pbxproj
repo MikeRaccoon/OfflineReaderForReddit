@@ -21,6 +21,7 @@
 		2792B6EE249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6ED249245F700A9BEC3 /* Offline_Reader_for_RedditUITests.swift */; };
 		2797DC9124B3C9DE001F81EA /* Comment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2797DC8F24B3C9DE001F81EA /* Comment+CoreDataClass.swift */; };
 		2797DC9224B3C9DE001F81EA /* Comment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2797DC9024B3C9DE001F81EA /* Comment+CoreDataProperties.swift */; };
+		27A1771324C4EB1500C47458 /* Variables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A1771224C4EB1500C47458 /* Variables.swift */; };
 		27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E302492B43600CD88B2 /* Data.xcdatamodeld */; };
 		27AA4E3C2492BA8100CD88B2 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */; };
 		27B47D372497D2B100F377E0 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B47D362497D2B100F377E0 /* Cell.swift */; };
@@ -65,6 +66,7 @@
 		2792B6EF249245F700A9BEC3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2797DC8F24B3C9DE001F81EA /* Comment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2797DC9024B3C9DE001F81EA /* Comment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		27A1771224C4EB1500C47458 /* Variables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Variables.swift; sourceTree = "<group>"; };
 		27AA4E312492B43600CD88B2 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		27AA4E3B2492BA8100CD88B2 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		27B47D362497D2B100F377E0 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */,
 				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
+				27A1771224C4EB1500C47458 /* Variables.swift */,
 				2781E27324AFC7CC002F53A9 /* SpinnerViewController.swift */,
 				27B47D362497D2B100F377E0 /* Cell.swift */,
 				27E72F1524AD1F98000EC492 /* CommentsViewController.swift */,
@@ -296,6 +299,7 @@
 				2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */,
 				2781E27424AFC7CC002F53A9 /* SpinnerViewController.swift in Sources */,
 				27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */,
+				27A1771324C4EB1500C47458 /* Variables.swift in Sources */,
 				27B47D372497D2B100F377E0 /* Cell.swift in Sources */,
 				2797DC9124B3C9DE001F81EA /* Comment+CoreDataClass.swift in Sources */,
 				275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */,
