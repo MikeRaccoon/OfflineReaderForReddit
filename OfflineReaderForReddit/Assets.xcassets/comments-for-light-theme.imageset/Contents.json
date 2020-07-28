@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "time-white.png",
+      "filename" : "comments-for-light-theme.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "time-white@2x.png",
+      "filename" : "comments-for-light-theme@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "time-white@3x.png",
+      "filename" : "comments-for-light-theme@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

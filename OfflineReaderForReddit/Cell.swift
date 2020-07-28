@@ -58,20 +58,20 @@ class Cell: UITableViewCell {
         
         score = UILabel()
         score.text = ""
-        labelIcon(imageName: "score-black", label: score, width: 10, height: 16)
+        labelIcon(imageName: "score-for-\(userInterfaceStyle!)-theme", label: score, width: 10, height: 16)
         
         comments = UILabel()
         comments.text = ""
-        labelIcon(imageName: "comments-black", label: comments, width: 16, height: 16)
+        labelIcon(imageName: "comments-for-\(userInterfaceStyle!)-theme", label: comments, width: 16, height: 14)
         
         timeSince = UILabel()
         timeSince.text = ""
-        labelIcon(imageName: "time-black", label: timeSince, width: 16, height: 16)
+        labelIcon(imageName: "time-for-\(userInterfaceStyle!)-theme", label: timeSince, width: 16, height: 16)
         
         share = UILabel()
         share.text = ""
         share.isUserInteractionEnabled = true
-        labelIcon(imageName: "share-black", label: share, width: 16, height: 16)
+        labelIcon(imageName: "share-for-\(userInterfaceStyle!)-theme", label: share, width: 16, height: 16)
         
         spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)

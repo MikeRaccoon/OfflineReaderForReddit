@@ -77,6 +77,11 @@ class ViewController: UITableViewController {
             performSelector(inBackground: #selector(fetchPosts), with: nil)
         }
         
+        if traitCollection.userInterfaceStyle == .light {
+            userInterfaceStyle = "light"
+        } else {
+            userInterfaceStyle = "dark"
+        }
         //spinner.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
         //self.spinner.frame = CGRect(x:0, y:0, width:30, height:30)
       //  self.spinner.startAnimating()
@@ -525,3 +530,4 @@ func aspectRatio(width: CGFloat, height: CGFloat) -> CGFloat {
     
     return aspect
 }
+

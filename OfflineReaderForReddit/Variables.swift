@@ -27,3 +27,4 @@ var playerLooper: NSObject?
 var playerLayer:AVPlayerLayer!
 var queuePlayer: AVQueuePlayer?
 var cellWidth: CGFloat!
+var userInterfaceStyle: String!

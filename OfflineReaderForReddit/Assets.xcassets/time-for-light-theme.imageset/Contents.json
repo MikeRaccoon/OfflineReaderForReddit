@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "time-black.png",
+      "filename" : "time-for-light-theme.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "time-black@2x.png",
+      "filename" : "time-for-light-theme@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "time-black@3x.png",
+      "filename" : "time-for-light-theme@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
