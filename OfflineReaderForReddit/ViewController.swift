@@ -75,6 +75,8 @@ class ViewController: UITableViewController {
         
         if !offlineMode {
             performSelector(inBackground: #selector(fetchPosts), with: nil)
+        } else {
+            loadSavedData(ascending: false)
         }
         
         if traitCollection.userInterfaceStyle == .light {
@@ -319,8 +321,6 @@ class ViewController: UITableViewController {
             }
         }
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let inactiveCell = cell as? Cell else { return }

@@ -7,5 +7,5 @@
 //
 
 var testSub = "explainlikeimfive"
-var offlineMode = false
 var postsLimit = 10
+var offlineMode = true

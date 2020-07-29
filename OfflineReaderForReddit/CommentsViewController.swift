@@ -36,6 +36,8 @@ class CommentsViewController: UITableViewController {
                 
         if !offlineMode {
             performSelector(inBackground: #selector(fetchComments), with: nil)
+        } else {
+            loadSavedData()
         }
     }
 
