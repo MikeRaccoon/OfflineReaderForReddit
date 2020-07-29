@@ -11,6 +11,7 @@
 		275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */; };
 		275D42C82492D101005DCB23 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 275D42C72492D101005DCB23 /* README.md */; };
 		2781E27424AFC7CC002F53A9 /* SpinnerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2781E27324AFC7CC002F53A9 /* SpinnerViewController.swift */; };
+		278B653124D1B473001DEFDC /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278B653024D1B473001DEFDC /* Settings.swift */; };
 		2792B6CC249245F400A9BEC3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CB249245F400A9BEC3 /* AppDelegate.swift */; };
 		2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */; };
 		2792B6D0249245F400A9BEC3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2792B6CF249245F400A9BEC3 /* ViewController.swift */; };
@@ -50,6 +51,7 @@
 		275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		275D42C72492D101005DCB23 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		2781E27324AFC7CC002F53A9 /* SpinnerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerViewController.swift; sourceTree = "<group>"; };
+		278B653024D1B473001DEFDC /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		2792B6C8249245F400A9BEC3 /* OfflineReaderForReddit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OfflineReaderForReddit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2792B6CB249245F400A9BEC3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2792B6CD249245F400A9BEC3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
 				27A1771224C4EB1500C47458 /* Variables.swift */,
+				278B653024D1B473001DEFDC /* Settings.swift */,
 				2781E27324AFC7CC002F53A9 /* SpinnerViewController.swift */,
 				27B47D362497D2B100F377E0 /* Cell.swift */,
 				27E72F1524AD1F98000EC492 /* CommentsViewController.swift */,
@@ -297,6 +300,7 @@
 				2792B6CC249245F400A9BEC3 /* AppDelegate.swift in Sources */,
 				275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */,
 				2792B6CE249245F400A9BEC3 /* SceneDelegate.swift in Sources */,
+				278B653124D1B473001DEFDC /* Settings.swift in Sources */,
 				2781E27424AFC7CC002F53A9 /* SpinnerViewController.swift in Sources */,
 				27AA4E322492B43600CD88B2 /* Data.xcdatamodeld in Sources */,
 				27A1771324C4EB1500C47458 /* Variables.swift in Sources */,

@@ -6,10 +6,7 @@
 //  Copyright © 2020 Mike. All rights reserved.
 //
 
-import CoreData
-import UIKit
 import AVKit
-import AVFoundation
 
 enum layoutTypes {
     case large
@@ -17,14 +14,9 @@ enum layoutTypes {
 }
 
 var layoutType = layoutTypes.large
-
-//var layoutType = "large"
-var offlineMode = false
-let testSub = "explainlikeimfive"
-let postsLimit = 10
 var looper: AVPlayerLooper?
 var playerLooper: NSObject?
-var playerLayer:AVPlayerLayer!
+var playerLayer: AVPlayerLayer!
 var queuePlayer: AVQueuePlayer?
 var cellWidth: CGFloat!
 var userInterfaceStyle: String!
