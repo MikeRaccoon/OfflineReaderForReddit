@@ -16,6 +16,7 @@
         <attribute name="created_utc" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="hls_url" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String"/>
+        <attribute name="is_frontpage_post" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="num_comments" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="permalink" attributeType="String"/>
@@ -39,6 +40,6 @@
     </entity>
     <elements>
         <element name="Comment" positionX="-63" positionY="108" width="128" height="178"/>
-        <element name="Post" positionX="-63" positionY="-18" width="128" height="328"/>
+        <element name="Post" positionX="-63" positionY="-18" width="128" height="343"/>
     </elements>
 </model>

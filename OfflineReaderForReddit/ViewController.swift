@@ -219,7 +219,7 @@ class ViewController: UITableViewController {
         let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
         
-        cell.subreddit.text = "r/\(post.subreddit)"
+        cell.subreddit.text = "\(post.subreddit)"
         cell.author.text = "u/\(post.author)"
         cell.title.text = post.title
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
@@ -342,7 +342,7 @@ class ViewController: UITableViewController {
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
-        let url = "https://www.reddit.com/r/\(testSub + sortType.rawValue + sortByDate).json?limit=\(postsLimit)"
+        let url = "https://www.reddit.com/\(subreddit + sortType.rawValue + sortByDate).json?limit=\(postsLimit)"
         
         if let data = try? String(contentsOf: URL(string: url)!) {
             // SwiftyJSON
@@ -374,7 +374,7 @@ class ViewController: UITableViewController {
         post.id = json["data"]["id"].stringValue
         post.name = json["data"]["name"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
-        post.subreddit = json["data"]["subreddit"].stringValue
+        post.subreddit = json["data"]["subreddit_name_prefixed"].stringValue
         post.post_hint = json["data"]["post_hint"].stringValue
         post.selftext = json["data"]["selftext"].stringValue
         post.score = json["data"]["score"].int32Value
@@ -386,7 +386,8 @@ class ViewController: UITableViewController {
         post.permalink = json["data"]["permalink"].stringValue
         post.reddit_video_height = json["data"]["media"]["reddit_video"]["height"].int32Value
         post.reddit_video_width = json["data"]["media"]["reddit_video"]["width"].int32Value
-        
+        post.is_frontpage_post = subreddit == "" ? true : false
+        print(post.is_frontpage_post)
         if post.thumbnail.contains("http") {
             let url = URL(string: post.thumbnail)
                         
@@ -432,6 +433,17 @@ class ViewController: UITableViewController {
     
     func loadSavedData(ascending: Bool) {
         let request = Post.createFetchRequest()
+        var predicateSubreddit: NSPredicate!
+        
+        if subreddit == "" {
+            // frontpage predicate
+            predicateSubreddit = NSPredicate(format: "is_frontpage_post == YES")
+        } else {
+            // subreddit predicate
+            predicateSubreddit = NSPredicate(format: "subreddit == %@", subreddit)
+        }
+                   
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateSubreddit])
 
         var sortValue: String
         

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Mike. All rights reserved.
 //
 
-var testSub = "explainlikeimfive"
+//var subreddit = "r/funny"
+var subreddit = ""
 var postsLimit = 10
 var offlineMode = false
