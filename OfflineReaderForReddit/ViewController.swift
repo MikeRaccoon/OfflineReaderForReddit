@@ -43,10 +43,10 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        addChild(spinner)
         spinner.view.frame = view.frame
         view.addSubview(spinner.view)
         spinner.didMove(toParent: self)
+        addChild(spinner)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Post")
         tableView.rowHeight = UITableView.automaticDimension

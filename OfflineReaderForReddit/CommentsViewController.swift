@@ -14,9 +14,15 @@ class CommentsViewController: UITableViewController {
     var container: NSPersistentContainer!
     var post = Post()
     var comments = [Comment]()
+    let spinner = SpinnerViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        spinner.view.frame = view.frame
+        view.addSubview(spinner.view)
+        spinner.didMove(toParent: self)
+        addChild(spinner)
         
         cellWidth = tableView.bounds.width
         
@@ -142,7 +148,7 @@ class CommentsViewController: UITableViewController {
                 self.fetchAllComments(jsonArray: jsonCommentArray)
                 
                 DispatchQueue.main.async {
-                     //self.spinner.view.isHidden = false
+                     self.spinner.view.isHidden = false
                      self.saveContext()
                      self.loadSavedData()
                 }
@@ -220,7 +226,7 @@ class CommentsViewController: UITableViewController {
             comments = try container.viewContext.fetch(request)
             print("Got \(comments.count) comments")
             tableView.reloadData()
-         //   spinner.view.isHidden = true
+            spinner.view.isHidden = true
         } catch {
             print("Fetch failed")
         }
