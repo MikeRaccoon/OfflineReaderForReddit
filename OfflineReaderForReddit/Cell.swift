@@ -76,7 +76,7 @@ class Cell: UITableViewCell {
         spacer = UIView()
         spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
-        stackView = UIStackView(arrangedSubviews: [score, comments, timeSince, share, spacer])
+        stackView = UIStackView(arrangedSubviews: [score, comments, timeSince, spacer, share])
         stackView.spacing = 8
         stackView.axis = .horizontal
         stackView.translatesAutoresizingMaskIntoConstraints = false

@@ -9,6 +9,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="parent_id" attributeType="String"/>
         <attribute name="score" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="score_hidden" attributeType="String"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="author" attributeType="String"/>
@@ -37,7 +38,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Comment" positionX="-63" positionY="108" width="128" height="163"/>
+        <element name="Comment" positionX="-63" positionY="108" width="128" height="178"/>
         <element name="Post" positionX="-63" positionY="-18" width="128" height="328"/>
     </elements>
 </model>

@@ -25,4 +25,5 @@ extension Comment {
     @NSManaged public var created_utc: Date
     @NSManaged public var name: String
     @NSManaged public var parent_id: String
+    @NSManaged public var score_hidden: String
 }

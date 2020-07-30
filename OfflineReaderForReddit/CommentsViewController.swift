@@ -120,7 +120,10 @@ class CommentsViewController: UITableViewController {
             cell.timeSince.isHidden = true
             cell.selfText.text = comment.body
             //cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id) body: \(comment.body)"
-            cell.score.text = "\(cell.score.text ?? "") \(comment.score)"
+            cell.score.text = comment.score_hidden == "false" ? "\(cell.score.text ?? "") \(comment.score)" : ""
+            
+            print(comment.score_hidden)
+            
             cell.author.text = "u/\(comment.author ?? "")"
         }
         
@@ -185,6 +188,7 @@ class CommentsViewController: UITableViewController {
             comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
             comment.name = json["data"]["name"].stringValue
             comment.parent_id = json["data"]["parent_id"].stringValue
+            comment.score_hidden = json["data"]["score_hidden"].stringValue
         }
     }
     
