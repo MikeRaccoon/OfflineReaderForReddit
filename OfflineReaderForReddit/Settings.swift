@@ -8,4 +8,4 @@
 
 var testSub = "explainlikeimfive"
 var postsLimit = 10
-var offlineMode = true
+var offlineMode = false

@@ -118,9 +118,8 @@ class CommentsViewController: UITableViewController {
             cell.subreddit.isHidden = true
             cell.comments.isHidden = true
             cell.timeSince.isHidden = true
-            //cell.selfText.text = comment.body
-            cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id) body: \(comment.body)"
-
+            cell.selfText.text = comment.body
+            //cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id) body: \(comment.body)"
             cell.score.text = "\(cell.score.text ?? "") \(comment.score)"
             cell.author.text = "u/\(comment.author ?? "")"
         }
@@ -134,7 +133,7 @@ class CommentsViewController: UITableViewController {
             let jsonComments = JSON(parseJSON: data)
             let jsonCommentArray = jsonComments[1]["data"]["children"].arrayValue
             
-            print("Received \(jsonCommentArray.count) new comments.")
+           // print("Received \(jsonCommentArray.count) level1 comments.")
             
             DispatchQueue.global(qos: .userInteractive).async { [unowned self] in
                 self.fetchAllComments(jsonArray: jsonCommentArray)
@@ -152,8 +151,7 @@ class CommentsViewController: UITableViewController {
     
     func fetchAllComments(jsonArray: [JSON]) {
         for jsonComment in jsonArray {
-            let comment = Comment(context: self.container.viewContext)
-            configure(comment: comment, usingJSON: jsonComment)
+            configure(usingJSON: jsonComment)
             
             let nextLevel = jsonComment["data"]["replies"]["data"]["children"].arrayValue
 
@@ -163,31 +161,31 @@ class CommentsViewController: UITableViewController {
         }
     }
     
-    func configure(comment: Comment, usingJSON json: JSON) {
-        comment.id = json["data"]["id"].stringValue
-        comment.link_id = json["data"]["link_id"].stringValue
-        comment.score = json["data"]["score"].int32Value
-        comment.author = json["data"]["author"].stringValue
-        comment.body = json["data"]["body"].stringValue
-        comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
-        comment.name = json["data"]["name"].stringValue
-        comment.parent_id = json["data"]["parent_id"].stringValue
-                
+    func configure(usingJSON json: JSON) {
+        // see if this comment exists; remove duplicates
+        var comment: Comment!
+        let commentRequest = Comment.createFetchRequest()
+        commentRequest.predicate = NSPredicate(format: "id == %@", json["data"]["id"].stringValue)
 
-        //var newComment: Comment!
-
-        // see if this comment exists already
-  //      let commentRequest = Comment.createFetchRequest()
-    //    commentRequest.predicate = NSPredicate(format: "id == %@", comment.id)
-
-      //  if let comments = try? container.viewContext.fetch(commentRequest) {
-        //    if comments.count > 0 {
+        if let comments = try? container.viewContext.fetch(commentRequest) {
+            if comments.count > 0 {
                 // we have this comment already
-               // print(comments.count)
-              //  newComment = comments[0]
-                // mainManagedObjectContext.deleteObject(x)
-          //  }
-        //}
+                comment = comments[0]
+            }
+        }
+        
+        if comment == nil {
+            // we didn't find a saved comment - create a new one!
+            comment = Comment(context: container.viewContext)
+            comment.id = json["data"]["id"].stringValue
+            comment.link_id = json["data"]["link_id"].stringValue
+            comment.score = json["data"]["score"].int32Value
+            comment.author = json["data"]["author"].stringValue
+            comment.body = json["data"]["body"].stringValue
+            comment.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
+            comment.name = json["data"]["name"].stringValue
+            comment.parent_id = json["data"]["parent_id"].stringValue
+        }
     }
     
     func saveContext() {
@@ -209,14 +207,10 @@ class CommentsViewController: UITableViewController {
         
         let predicateLinkId = NSPredicate(format: "link_id == %@", post.name) // filters comments for particular post
         let predicateParentId = NSPredicate(format: "parent_id == link_id") // filters 1st level
-        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateLinkId])
-
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateLinkId, predicateParentId])
         
-        //let sort = NSSortDescriptor(key: "score", ascending: false)
-        let name = NSSortDescriptor(key: "name", ascending: false)
-        let parent_id = NSSortDescriptor(key: "parent_id", ascending: false)
-
-        request.sortDescriptors = [name, parent_id]
+        let score = NSSortDescriptor(key: "score", ascending: false)
+        request.sortDescriptors = [score]
         
         do {
             comments = try container.viewContext.fetch(request)
