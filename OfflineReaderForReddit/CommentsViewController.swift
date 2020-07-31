@@ -127,10 +127,7 @@ class CommentsViewController: UITableViewController {
             cell.selfText.text = comment.body
             //cell.selfText.text = "(name: \(comment.name) parent_id: \(comment.parent_id) body: \(comment.body)"
             cell.score.text = comment.score_hidden == "false" ? "\(cell.score.text ?? "") \(comment.score)" : ""
-            
-            print(comment.score_hidden)
-            
-            cell.author.text = "u/\(comment.author ?? "")"
+            cell.author.text = "u/\(comment.author)"
         }
         
         return cell

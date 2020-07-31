@@ -11,12 +11,13 @@ import UIKit
 import AVKit
 import AVFoundation
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
     var isPlayingVideo = false
     let spinner = SpinnerViewController()
+    var search: UISearchController!
     
     enum sortTypes: String {
         case best = "/best"
@@ -55,7 +56,7 @@ class ViewController: UITableViewController {
         
         cellWidth = tableView.bounds.width
         
-        title = "Offline Reader for Reddit"
+        title = subreddit == "" ? "Frontpage" : subreddit
         
         let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutTypeSwitch))
         let sortBtn = UIBarButtonItem(title: "sort", style: .plain, target: self, action: #selector(sortPosts))
@@ -71,25 +72,45 @@ class ViewController: UITableViewController {
             }
         }
         
-            //createSpinnerView()
-        
-        if !offlineMode {
-            performSelector(inBackground: #selector(fetchPosts), with: nil)
-        } else {
-            loadSavedData(ascending: false)
-        }
+        processing(ascending: false)
         
         if traitCollection.userInterfaceStyle == .light {
             userInterfaceStyle = "light"
         } else {
             userInterfaceStyle = "dark"
         }
-        //spinner.activityIndicatorViewStyle = UIActivityIndicatorView.Style.gray
-        //self.spinner.frame = CGRect(x:0, y:0, width:30, height:30)
-      //  self.spinner.startAnimating()
+        
+        // UISearchController
+        search = UISearchController(searchResultsController: nil)
+        search.searchResultsUpdater = self
+        search.obscuresBackgroundDuringPresentation = false
+        search.searchBar.placeholder = "r/subredditName"
+        
+    //    search.definesPresentationContext = true
+        navigationItem.searchController = search
+        search.searchBar.delegate = self
     }
     
-    func sortProcessing(ascending: Bool) {
+    func updateSearchResults(for searchController: UISearchController) {
+        //guard let text = searchController.searchBar.text else { return }
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        search.searchBar.text = "r/"
+        return true
+    }
+    
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        subreddit = search.searchBar.text!
+        search.isActive = false
+        search.searchBar.text = ""
+        title = "..."
+        processing(ascending: false)
+        
+        return true
+    }
+    
+    func processing(ascending: Bool) {
         spinner.view.isHidden = false
         
         if !offlineMode {
@@ -104,19 +125,19 @@ class ViewController: UITableViewController {
         
         let sortBest = UIAlertAction(title: "Best", style: .default) { _ in
             self.sortType = sortTypes.best
-            self.sortProcessing(ascending: false)
+            self.processing(ascending: false)
         }
         ac.addAction(sortBest)
         
         let sortHot = UIAlertAction(title: "Hot", style: .default) { _ in
             self.sortType = sortTypes.hot
-            self.sortProcessing(ascending: false)
+            self.processing(ascending: false)
         }
         ac.addAction(sortHot)
         
         let sortNew = UIAlertAction(title: "New", style: .default) { _ in
             self.sortType = sortTypes.new
-            self.sortProcessing(ascending: false)
+            self.processing(ascending: false)
         }
         ac.addAction(sortNew)
         
@@ -134,7 +155,7 @@ class ViewController: UITableViewController {
    
         let sortRising = UIAlertAction(title: "Rising", style: .default) { _ in
             self.sortType = sortTypes.rising
-            self.sortProcessing(ascending: false)
+            self.processing(ascending: false)
         }
         ac.addAction(sortRising)
         
@@ -155,37 +176,37 @@ class ViewController: UITableViewController {
       
         let hour = UIAlertAction(title: "This hour", style: .default) { _ in
             self.sortByDate = sortDates.hour.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(hour)
         
         let day = UIAlertAction(title: "Today", style: .default) { _ in
             self.sortByDate = sortDates.day.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(day)
         
         let week = UIAlertAction(title: "This week", style: .default) { _ in
             self.sortByDate = sortDates.week.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(week)
         
         let month = UIAlertAction(title: "This month", style: .default) { _ in
             self.sortByDate = sortDates.month.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(month)
         
         let year = UIAlertAction(title: "This year", style: .default) { _ in
             self.sortByDate = sortDates.year.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(year)
         
         let all = UIAlertAction(title: "All time", style: .default) { _ in
             self.sortByDate = sortDates.all.rawValue
-            self.sortProcessing(ascending: ascending)
+            self.processing(ascending: ascending)
         }
         ac.addAction(all)
         
@@ -387,7 +408,7 @@ class ViewController: UITableViewController {
         post.reddit_video_height = json["data"]["media"]["reddit_video"]["height"].int32Value
         post.reddit_video_width = json["data"]["media"]["reddit_video"]["width"].int32Value
         post.is_frontpage_post = subreddit == "" ? true : false
-        print(post.is_frontpage_post)
+      
         if post.thumbnail.contains("http") {
             let url = URL(string: post.thumbnail)
                         
@@ -473,6 +494,8 @@ class ViewController: UITableViewController {
         } catch {
             print("Fetch failed")
         }
+        
+        title = subreddit == "" ? "Frontpage" : subreddit
     }
     
     @objc func layoutTypeSwitch() {
