@@ -103,7 +103,6 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         subreddit = search.searchBar.text!
         search.isActive = false
-        search.searchBar.text = ""
         title = "..."
         processing(ascending: false)
         
@@ -385,7 +384,13 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
                 }
             }
         } else {
-            print("error")
+            print("Error fetching subreddit.")
+            
+            DispatchQueue.main.async {
+                self.title = "Not Found"
+                self.search.searchBar.text = subreddit
+                self.spinner.view.isHidden = true
+            }
         }
     }
     
