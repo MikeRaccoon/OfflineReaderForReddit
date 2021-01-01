@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2740BCDE24D4CD3100B3616C /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2740BCDD24D4CD3100B3616C /* SidebarViewController.swift */; };
 		275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */; };
 		275D42C62492D091005DCB23 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */; };
 		275D42C82492D101005DCB23 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 275D42C72492D101005DCB23 /* README.md */; };
@@ -47,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2740BCDD24D4CD3100B3616C /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
 		275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		275D42C72492D101005DCB23 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				275D42C32492D091005DCB23 /* Post+CoreDataClass.swift */,
 				275D42C42492D091005DCB23 /* Post+CoreDataProperties.swift */,
 				2792B6CF249245F400A9BEC3 /* ViewController.swift */,
+				2740BCDD24D4CD3100B3616C /* SidebarViewController.swift */,
 				27A1771224C4EB1500C47458 /* Variables.swift */,
 				278B653024D1B473001DEFDC /* Settings.swift */,
 				2781E27324AFC7CC002F53A9 /* SpinnerViewController.swift */,
@@ -306,6 +309,7 @@
 				27A1771324C4EB1500C47458 /* Variables.swift in Sources */,
 				27B47D372497D2B100F377E0 /* Cell.swift in Sources */,
 				2797DC9124B3C9DE001F81EA /* Comment+CoreDataClass.swift in Sources */,
+				2740BCDE24D4CD3100B3616C /* SidebarViewController.swift in Sources */,
 				275D42C52492D091005DCB23 /* Post+CoreDataClass.swift in Sources */,
 				27E72F1624AD1F98000EC492 /* CommentsViewController.swift in Sources */,
 				2797DC9224B3C9DE001F81EA /* Comment+CoreDataProperties.swift in Sources */,

@@ -7,6 +7,6 @@
 //
 
 //var subreddit = "r/funny"
-var subreddit = ""
+var subreddit = "science"
 var postsLimit = 10
 var offlineMode = false

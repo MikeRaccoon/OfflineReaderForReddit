@@ -10,8 +10,10 @@ import CoreData
 import UIKit
 import AVKit
 import AVFoundation
+import SystemConfiguration
 
 class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
+    var persistentStoreCoordinator: NSPersistentStoreCoordinator!
     var container: NSPersistentContainer!
     var posts = [Post]()
     let dispatchGroup = DispatchGroup()
@@ -44,6 +46,8 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        offlineMode = !isConnectionAvailable()
+        
         spinner.view.frame = view.frame
         view.addSubview(spinner.view)
         spinner.didMove(toParent: self)
@@ -56,7 +60,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
         
         cellWidth = tableView.bounds.width
         
-        title = subreddit == "" ? "Frontpage" : subreddit
+        title = subreddit == "" ? "Frontpage" : "r/\(subreddit)"
         
         let layoutBtn = UIBarButtonItem(title: "view", style: .plain, target: self, action: #selector(layoutTypeSwitch))
         let sortBtn = UIBarButtonItem(title: "sort", style: .plain, target: self, action: #selector(sortPosts))
@@ -118,6 +122,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
             self.loadSavedData(ascending: ascending)
         }
     }
+    
     
     @objc func sortPosts() {
         let ac = UIAlertController(title: "Sorting by", message: nil, preferredStyle: .alert)
@@ -239,7 +244,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
         let cell = Cell.init(style: .default, reuseIdentifier: "Post")
         let post = posts[indexPath.row]
         
-        cell.subreddit.text = "\(post.subreddit)"
+        cell.subreddit.text = "r/\(post.subreddit)"
         cell.author.text = "u/\(post.author)"
         cell.title.text = post.title
         cell.score.text = "\(cell.score.text ?? "") \(post.score)"
@@ -362,8 +367,8 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     @objc func fetchPosts() {
         //let newestPostDate = getNewestPostDate()
-        let url = "https://www.reddit.com/\(subreddit + sortType.rawValue + sortByDate).json?limit=\(postsLimit)"
-        
+        let url = "https://www.reddit.com/r/\(subreddit + sortType.rawValue + sortByDate).json?limit=\(postsLimit)"
+
         if let data = try? String(contentsOf: URL(string: url)!) {
             // SwiftyJSON
             let jsonPosts = JSON(parseJSON: data)
@@ -388,7 +393,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
             
             DispatchQueue.main.async {
                 self.title = "Not Found"
-                self.search.searchBar.text = subreddit
+                self.search.searchBar.text = "r/\(subreddit)"
                 self.spinner.view.isHidden = true
             }
         }
@@ -400,7 +405,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
         post.id = json["data"]["id"].stringValue
         post.name = json["data"]["name"].stringValue
         post.created_utc = Date(timeIntervalSince1970: json["data"]["created_utc"].doubleValue)
-        post.subreddit = json["data"]["subreddit_name_prefixed"].stringValue
+        post.subreddit = json["data"]["subreddit"].stringValue
         post.post_hint = json["data"]["post_hint"].stringValue
         post.selftext = json["data"]["selftext"].stringValue
         post.score = json["data"]["score"].int32Value
@@ -459,17 +464,17 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
     
     func loadSavedData(ascending: Bool) {
         let request = Post.createFetchRequest()
-        var predicateSubreddit: NSPredicate!
+        var predicate: NSPredicate!
         
-        if subreddit == "" {
+        if subreddit == "" || subreddit == "all" {
             // frontpage predicate
-            predicateSubreddit = NSPredicate(format: "is_frontpage_post == YES")
+            predicate = NSPredicate(format: "is_frontpage_post == YES")
         } else {
             // subreddit predicate
-            predicateSubreddit = NSPredicate(format: "subreddit == %@", subreddit)
+            predicate = NSPredicate(format: "subreddit == %@", subreddit)
         }
-                   
-        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicateSubreddit])
+        
+        request.predicate = NSCompoundPredicate(type: .and, subpredicates: [predicate])
 
         var sortValue: String
         
@@ -500,7 +505,7 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
             print("Fetch failed")
         }
         
-        title = subreddit == "" ? "Frontpage" : subreddit
+        title = subreddit == "" ? "Frontpage" : "r/\(subreddit)"
     }
     
     @objc func layoutTypeSwitch() {
@@ -511,6 +516,20 @@ class ViewController: UITableViewController, UISearchResultsUpdating, UISearchBa
         }
         
         tableView.reloadData()
+    }
+    
+    func isConnectionAvailable() -> Bool {
+        let reachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "www.google.com")
+        var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
+        
+        if SCNetworkReachabilityGetFlags(reachability!, &flags) == false {
+            return false
+        }
+        
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        
+        return (isReachable && !needsConnection)
     }
     
 //    func getNewestPostDate() -> String {
